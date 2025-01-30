@@ -46,9 +46,9 @@ all:
 	@$(MAKE) --no-print-directory $(NAME)
 
 $(NAME): $(OBJS) Makefile
-	@printf "$(PINK)Linking objects...$(RESET)\n"
+	@printf "$(PINK)Linking $(YELLOW)objects$(PINK)...$(RESET)\n"
 	@$(C++) $(FLAGS) $(OBJS) -o $(NAME)
-	@printf "$(YELLOW)Program compiled and ready to use.$(RESET)\n"
+	@printf "$(GREEN)Program compiled and ready to use.$(RESET)\n"
 
 $(BIN_DIR)%.o: %.cpp Makefile
 	@printf "$(PINK)Compiling $(CYAN)$(notdir $<)$(PINK)...$(RESET)\n"
@@ -57,9 +57,11 @@ $(BIN_DIR)%.o: %.cpp Makefile
 
 clean:
 	@rm -rf $(BIN_DIR)
+	@printf "$(RED)Objects and dependencies removed.$(RESET)\n"
 
 fclean: clean
 	@rm -rf $(NAME)
+	@printf "$(RED)Executable $(WHITE)$(NAME)$(RED) removed.$(RESET)\n"
 
 re: fclean all
 # ------------------ #
