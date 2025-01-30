@@ -78,4 +78,16 @@ std::string	Contact::to_string(void)
 	return stringified_contact;
 }
 
+Contact &Contact::operator=(const Contact &contact)
+{
+	if (this == &contact)
+		return *this;
+	this->first_name = contact.first_name;
+	this->last_name = contact.last_name;
+	this->nickname = contact.nickname;
+	this->phone_number = contact.phone_number;
+	this->darkest_secret = contact.darkest_secret;
+	return *this;
+}
+
 Contact::~Contact(){}

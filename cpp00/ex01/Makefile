@@ -29,15 +29,17 @@ FLAGS = -Wall -Wextra -Werror -std=c++98
 
 SRC = src/
 BIN_DIR = bin/
+INC = -I$(SRC)
 
 FILES = main.cpp \
-		Contact.cpp
+		Contact.cpp \
+		PhoneBook.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
 # ------------------ #
 
 # --- # vpath # ---- #
-vpath %.cpp $(SRC):$(SRC)Contact
+vpath %.cpp $(SRC):$(SRC)Contact:$(SRC)PhoneBook
 # ------------------ #
 
 
@@ -54,7 +56,7 @@ $(NAME): $(OBJS) Makefile
 $(BIN_DIR)%.o: %.cpp Makefile
 	@printf "$(PINK)Compiling $(CYAN)$(notdir $<)$(PINK)...$(RESET)\n"
 	@mkdir -p $(BIN_DIR)
-	@$(C++) $(FLAGS) -MMD -c $< -o $@
+	@$(C++) $(FLAGS) $(INC) -MMD -c $< -o $@
 
 clean:
 	@rm -rf $(BIN_DIR)

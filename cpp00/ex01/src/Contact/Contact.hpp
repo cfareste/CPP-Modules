@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string>
 
 class Contact
@@ -26,6 +28,8 @@ class Contact
 		void	set_darkest_secret(std::string darkest_secret);
 
 		std::string	to_string(void);
+
+		Contact & operator=(const Contact &contact);
 
 		~Contact();
 };
