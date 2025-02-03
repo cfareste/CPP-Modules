@@ -22,15 +22,12 @@ static void	fill_contact_information(t_contact_info &contact_info)
 
 static bool	validate_fields(t_contact_info &contact_info)
 {
-	if (contact_info.first_name.empty()
-		|| contact_info.last_name.empty()
-		|| contact_info.nickname.empty()
-		|| contact_info.phone_number.empty()
-		|| !is_num(contact_info.phone_number)
-		|| contact_info.darkest_secret.empty())
-	{
-		return false;
-	}
+	if (contact_info.first_name.empty()) return false;
+	if (contact_info.last_name.empty()) return false;
+	if (contact_info.nickname.empty()) return false;
+	if (contact_info.phone_number.empty() || !is_num(contact_info.phone_number)) return false;
+	if (contact_info.darkest_secret.empty()) return false;
+
 	return true;
 }
 
