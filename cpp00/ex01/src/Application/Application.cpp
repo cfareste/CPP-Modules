@@ -1,9 +1,27 @@
 #include "Application.hpp"
-#include "PhoneBook/PhoneBook.hpp"
-#include "command/command.hpp"
+#include "Command/add/add_command.hpp"
+#include <iostream>
 
 Application::Application()
 {
+}
+
+std::string	Application::read_command(void)
+{
+	std::string	input;
+
+	std::cout << "Enter a command: ";
+	if (!std::getline(std::cin, input))
+		exit(EXIT_FAILURE);
+	return input;
+}
+
+void	Application::execute_command(std::string &command, PhoneBook &phone_book)
+{
+	if (command == "ADD")
+		write_new_contact(phone_book);
+	else if (command == "SEARCH")
+		phone_book.list_contacts();
 }
 
 void Application::run()
@@ -13,8 +31,8 @@ void Application::run()
 
 	while (command != "EXIT")
 	{
-		command = read_command();
-		execute_command(command, phone_book);
+		command = this->read_command();
+		this->execute_command(command, phone_book);
 	}
 }
 
