@@ -25,7 +25,7 @@ CYAN = \033[0;36m
 NAME = phonebook
 
 C++ = c++
-FLAGS = -Wall -Wextra -Werror -std=c++98
+FLAGS = -Wall -Wextra -Werror -std=c++98 -g -fsanitize=address
 
 SRC = src/
 BIN_DIR = bin/
@@ -33,13 +33,17 @@ INC = -I$(SRC)
 
 FILES = main.cpp \
 		Contact.cpp \
-		PhoneBook.cpp
+		PhoneBook.cpp \
+		command.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
 # ------------------ #
 
 # --- # vpath # ---- #
-vpath %.cpp $(SRC):$(SRC)Contact:$(SRC)PhoneBook
+vpath %.cpp $(SRC):\
+			$(SRC)Contact:\
+			$(SRC)PhoneBook:\
+			$(SRC)command
 # ------------------ #
 
 
