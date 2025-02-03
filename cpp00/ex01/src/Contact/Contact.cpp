@@ -87,7 +87,7 @@ std::string	Contact::to_string(void)
 	return stringified_contact;
 }
 
-Contact &Contact::operator=(const Contact &contact)
+Contact	&Contact::operator=(const Contact &contact)
 {
 	if (this == &contact)
 		return *this;
