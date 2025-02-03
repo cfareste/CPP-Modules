@@ -1,4 +1,5 @@
 #include "command.hpp"
+#include "command/add/add_command.hpp"
 #include <iostream>
 
 std::string	read_command(void)
@@ -6,14 +7,14 @@ std::string	read_command(void)
 	std::string	input;
 
 	std::cout << "Enter a command: ";
-	std::cin >> input;
+	std::cin >> std::ws >> input;
 	return input;
 }
 
-void	execute_command(std::string &command)
+void	execute_command(std::string &command, PhoneBook &phone_book)
 {
 	if (command == "ADD")
-		std::cout << "Adding contact" << std::endl;
+		write_new_contact(phone_book);
 	else if (command == "SEARCH")
-		std::cout << "Searching contact" << std::endl;
+		phone_book.list_contacts();
 }

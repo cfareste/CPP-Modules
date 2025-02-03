@@ -34,7 +34,8 @@ INC = -I$(SRC)
 FILES = main.cpp \
 		Contact.cpp \
 		PhoneBook.cpp \
-		command.cpp
+		command.cpp \
+		add_command.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
 # ------------------ #
@@ -43,7 +44,8 @@ DEPS = $(OBJS:%.o=%.d)
 vpath %.cpp $(SRC):\
 			$(SRC)Contact:\
 			$(SRC)PhoneBook:\
-			$(SRC)command
+			$(SRC)command:\
+			$(SRC)command/add
 # ------------------ #
 
 

@@ -4,12 +4,13 @@
 
 int	main(void)
 {
+	PhoneBook	phone_book;
 	std::string	command = "";
 
 	while (command != "EXIT")
 	{
 		command = read_command();
-		execute_command(command);
+		execute_command(command, phone_book);
 	}
 	return 0;
 }
