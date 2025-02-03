@@ -1,16 +1,9 @@
-#include "Contact/Contact.hpp"
-#include "PhoneBook/PhoneBook.hpp"
-#include "command/command.hpp"
+#include "Application/Application.hpp"
 
 int	main(void)
 {
-	PhoneBook	phone_book;
-	std::string	command = "";
+	Application	app = Application();
 
-	while (command != "EXIT")
-	{
-		command = read_command();
-		execute_command(command, phone_book);
-	}
+	app.run();
 	return 0;
 }

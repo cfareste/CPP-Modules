@@ -32,6 +32,7 @@ BIN_DIR = bin/
 INC = -I$(SRC)
 
 FILES = main.cpp \
+		Application.cpp \
 		Contact.cpp \
 		PhoneBook.cpp \
 		command.cpp \
@@ -43,6 +44,7 @@ DEPS = $(OBJS:%.o=%.d)
 
 # --- # vpath # ---- #
 vpath %.cpp $(SRC):\
+			$(SRC)Application:\
 			$(SRC)Contact:\
 			$(SRC)PhoneBook:\
 			$(SRC)command:\
