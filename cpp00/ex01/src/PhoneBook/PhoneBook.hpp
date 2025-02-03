@@ -10,6 +10,9 @@ class PhoneBook
 		uint8_t	saved_contacts;
 		Contact	contacts[MAX_CONTACTS];
 
+		void	shift_contacts();
+		void	replace_oldest_contact(Contact &contact);
+
 	public:
 		PhoneBook();
 

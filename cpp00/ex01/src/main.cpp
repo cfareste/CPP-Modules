@@ -12,6 +12,7 @@ int	main(void)
 	Contact	c6 = Contact("Contact6", "c6", 637624279);
 	Contact	c7 = Contact("Contact7", "c7", 637624279);
 	Contact	c8 = Contact("Contact8", "c8", 637624279);
+	Contact	c9 = Contact("Contact9", "c9", 637624279);
 
 	PhoneBook	phone_book;
 
@@ -20,13 +21,14 @@ int	main(void)
 	phone_book.add_contact(c3);
 	phone_book.add_contact(c4);
 	phone_book.add_contact(c5);
-
-	phone_book.list_contacts();
-
 	phone_book.add_contact(c6);
 	phone_book.add_contact(c7);
 	phone_book.add_contact(c8);
 
+	phone_book.list_contacts();
 	std::cout << std::endl;
+
+	phone_book.add_contact(c9);
+
 	phone_book.list_contacts();
 }
