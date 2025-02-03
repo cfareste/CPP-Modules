@@ -1,5 +1,14 @@
 #include "Contact.hpp"
 
+Contact::Contact()
+{
+	this->first_name = "";
+	this->last_name = "";
+	this->nickname = "";
+	this->phone_number = 0;
+	this->darkest_secret = "";
+}
+
 Contact::Contact(std::string first_name, std::string nickname, uint32_t phone_number)
 {
 	this->first_name = first_name;

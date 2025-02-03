@@ -12,6 +12,7 @@ class Contact
 		std::string	darkest_secret;
 
 	public:
+		Contact();
 		Contact(std::string first_name, std::string nickname, uint32_t phone_number);
 		Contact(const Contact &contact);
 
