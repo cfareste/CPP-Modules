@@ -1,12 +1,13 @@
 #include "add_command.hpp"
 #include "Contact/Contact.hpp"
 #include "Contact/contact_info/contact_info.hpp"
+#include "utils/utils.hpp"
 #include <iostream>
 
 static void	get_field(std::string field_name, std::string &field)
 {
 	std::cout << "Enter contact's " + field_name + ": ";
-	if (!std::getline(std::cin >> std::ws, field))
+	if (!std::getline(std::cin, field))
 		exit(EXIT_FAILURE);
 }
 
@@ -22,9 +23,10 @@ static void	fill_contact_information(t_contact_info &contact_info)
 static bool	validate_fields(t_contact_info &contact_info)
 {
 	if (contact_info.first_name.empty()
-		||contact_info.last_name.empty()
+		|| contact_info.last_name.empty()
 		|| contact_info.nickname.empty()
 		|| contact_info.phone_number.empty()
+		|| !is_num(contact_info.phone_number)
 		|| contact_info.darkest_secret.empty())
 	{
 		return false;

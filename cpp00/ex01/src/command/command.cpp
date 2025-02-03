@@ -7,7 +7,8 @@ std::string	read_command(void)
 	std::string	input;
 
 	std::cout << "Enter a command: ";
-	std::cin >> std::ws >> input;
+	if (!std::getline(std::cin, input))
+		exit(EXIT_FAILURE);
 	return input;
 }
 
