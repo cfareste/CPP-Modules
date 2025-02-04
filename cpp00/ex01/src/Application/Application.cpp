@@ -1,5 +1,5 @@
 #include "Application.hpp"
-#include "Command/add/add_command.hpp"
+#include "command/add/add_command.hpp"
 #include <iostream>
 
 Application::Application()
