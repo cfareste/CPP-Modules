@@ -16,6 +16,7 @@ class PhoneBook
 	public:
 		PhoneBook();
 
+		uint8_t	get_saved_contacts();
 		Contact	get_contact_by_index(int index);
 
 		void	add_contact(Contact &contact);

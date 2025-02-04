@@ -36,6 +36,7 @@ FILES = main.cpp \
 		Contact.cpp \
 		PhoneBook.cpp \
 		add_command.cpp \
+		search_command.cpp \
 		utils.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
@@ -46,7 +47,8 @@ vpath %.cpp $(SRC):\
 			$(SRC)Application:\
 			$(SRC)Contact:\
 			$(SRC)PhoneBook:\
-			$(SRC)Command/add:\
+			$(SRC)command/add:\
+			$(SRC)command/search:\
 			$(SRC)utils
 # ------------------ #
 

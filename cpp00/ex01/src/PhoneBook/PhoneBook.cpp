@@ -24,7 +24,12 @@ void	PhoneBook::replace_oldest_contact(Contact &contact){
 	this->contacts[MAX_CONTACTS - 1] = contact;
 }
 
-Contact	PhoneBook::get_contact_by_index(int index)
+uint8_t	PhoneBook::get_saved_contacts()
+{
+	return this->saved_contacts;
+}
+
+Contact PhoneBook::get_contact_by_index(int index)
 {
 	return this->contacts[index];
 }

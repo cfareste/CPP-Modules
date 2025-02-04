@@ -1,5 +1,6 @@
 #include "Application.hpp"
 #include "command/add/add_command.hpp"
+#include "command/search/search_command.hpp"
 #include <iostream>
 
 Application::Application()
@@ -21,7 +22,7 @@ void	Application::execute_command(std::string &command, PhoneBook &phone_book)
 	if (command == "ADD")
 		write_new_contact(phone_book);
 	else if (command == "SEARCH")
-		phone_book.list_contacts();
+		search_contacts(phone_book);
 }
 
 void Application::run()
