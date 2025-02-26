@@ -28,17 +28,22 @@ static std::string	read_index()
 	return input;
 }
 
-static int	get_contact_index()
+static bool	validate_index(std::string &input, uint8_t max_index)
 {
-	std::string input = read_index();
-
 	if (!is_num(input))
 	{
 		std::cout << "The contact's index is not a number" << std::endl;
-		return -1;
+		return false;
 	}
 
-	return std::stoi(input);
+	int	index = std::stoi(input);
+	if (index < 0 || index + 1 > max_index)
+	{
+		std::cout << "The contact's index is out of bounds" << std::endl;
+		return false;
+	}
+
+	return true;
 }
 
 void	search_contacts(PhoneBook &phone_book)
@@ -66,12 +71,12 @@ void	search_contacts(PhoneBook &phone_book)
 		std::cout << std::endl;
 	}
 
-	int	index = get_contact_index();
-	if (index < 0 || index + 1 > saved_contacts)
+	std::string	input = read_index();
+	if (!validate_index(input, saved_contacts))
 	{
-		std::cout << "The contact's index is out of bounds" << std::endl;
 		return ;
 	}
 
+	int	index = std::stoi(input);
 	std::cout << phone_book.get_contact_by_index(index).to_string() << std::endl;
 }
