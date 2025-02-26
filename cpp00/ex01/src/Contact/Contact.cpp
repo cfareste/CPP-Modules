@@ -79,11 +79,11 @@ std::string	Contact::to_string(void)
 {
 	std::string	stringified_contact = "";
 
-	stringified_contact += this->first_name + " | ";
-	stringified_contact += this->last_name + " | ";
-	stringified_contact += this->nickname + " | ";
-	stringified_contact += std::to_string(this->phone_number) + " | ";
-	stringified_contact += this->darkest_secret;
+	stringified_contact += "First name: " + this->first_name + "\n";
+	stringified_contact += "Last name: " + this->last_name + "\n";
+	stringified_contact += "Nickname: " + this->nickname + "\n";
+	stringified_contact += "Phone number: " + std::to_string(this->phone_number) + "\n";
+	stringified_contact += "Darkest secret: " + this->darkest_secret;
 	return stringified_contact;
 }
 

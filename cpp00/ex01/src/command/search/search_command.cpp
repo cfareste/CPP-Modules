@@ -1,5 +1,6 @@
 #include "search_command.hpp"
 #include "Contact/Contact.hpp"
+#include "utils/utils.hpp"
 #include <iostream>
 #include <iomanip>
 
@@ -15,6 +16,29 @@ static void	print_field(std::string str)
 		str.replace(9, str.length(), ".");
 	}
 	std::cout << std::setw(10) << str;
+}
+
+static std::string	read_index()
+{
+	std::string	input;
+
+	std::cout << "Enter a contact index: ";
+	if (!std::getline(std::cin, input))
+		exit(EXIT_FAILURE);
+	return input;
+}
+
+static int	get_contact_index()
+{
+	std::string input = read_index();
+
+	if (!is_num(input))
+	{
+		std::cout << "The contact's index is not a number" << std::endl;
+		return -1;
+	}
+
+	return std::stoi(input);
 }
 
 void	search_contacts(PhoneBook &phone_book)
@@ -41,4 +65,13 @@ void	search_contacts(PhoneBook &phone_book)
 		print_separator();
 		std::cout << std::endl;
 	}
+
+	int	index = get_contact_index();
+	if (index < 0 || index + 1 > saved_contacts)
+	{
+		std::cout << "The contact's index is out of bounds" << std::endl;
+		return ;
+	}
+
+	std::cout << phone_book.get_contact_by_index(index).to_string() << std::endl;
 }
