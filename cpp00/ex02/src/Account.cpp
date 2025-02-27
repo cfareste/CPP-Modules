@@ -9,22 +9,22 @@ int	Account::_totalNbWithdrawals = 0;
 
 int	Account::getNbAccounts(void)
 {
-	return 0;
+	return Account::_nbAccounts;
 }
 
 int	Account::getTotalAmount(void)
 {
-	return 0;
+	return Account::_totalAmount;
 }
 
 int	Account::getNbDeposits(void)
 {
-	return 0;
+	return Account::_totalNbDeposits;
 }
 
 int	Account::getNbWithdrawals(void)
 {
-	return 0;
+	return Account::_totalNbWithdrawals;
 }
 
 void	Account::displayAccountsInfos(void)
