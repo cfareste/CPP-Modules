@@ -41,7 +41,7 @@ DEPS = $(OBJS:%.o=%.d)
 
 # --- # vpath # ---- #
 vpath %.cpp $(SRC):\
-			$(SRC):Zombie
+			$(SRC)/Zombie
 # ------------------ #
 
 
