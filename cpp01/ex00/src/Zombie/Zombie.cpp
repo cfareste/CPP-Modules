@@ -14,5 +14,5 @@ void	Zombie::announce()
 
 Zombie::~Zombie()
 {
-	std::cout << "The zombie '" << this->name << "' is now and un-undead" << std::endl;
+	std::cout << "The zombie '" << this->name << "' is now an un-undead" << std::endl;
 }
