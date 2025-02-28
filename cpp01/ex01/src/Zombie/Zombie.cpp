@@ -2,7 +2,17 @@
 
 #include <iostream>
 
+Zombie::Zombie()
+{
+	this->name = "";
+}
+
 Zombie::Zombie(std::string name)
+{
+	this->name = name;
+}
+
+void Zombie::set_name(std::string &name)
 {
 	this->name = name;
 }
