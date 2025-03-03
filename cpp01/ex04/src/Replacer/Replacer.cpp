@@ -33,7 +33,7 @@ void Replacer::replace_occurrences(std::ifstream &input_file, std::ofstream &out
 		{
 			line.erase(occurrence_pos, occurrence.size());
 			line.insert(occurrence_pos, replacement);
-			occurrence_pos = line.find(occurrence, occurrence_pos + 1);
+			occurrence_pos = line.find(occurrence, occurrence_pos + replacement.size());
 		}
 
 		output_file << line << std::endl;
