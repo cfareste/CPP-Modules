@@ -33,7 +33,8 @@ INC = -I$(SRC)
 
 FILES = main.cpp \
 		Weapon.cpp \
-		Human.cpp
+		HumanA.cpp \
+		HumanB.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
 # ------------------ #
@@ -41,7 +42,7 @@ DEPS = $(OBJS:%.o=%.d)
 # --- # vpath # ---- #
 vpath %.cpp $(SRC):\
 			$(SRC)/Weapon:\
-			$(SRC)/HumanA
+			$(SRC)/Human
 # ------------------ #
 
 
