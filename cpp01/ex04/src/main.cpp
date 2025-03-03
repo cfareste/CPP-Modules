@@ -1,6 +1,11 @@
+#include <iostream>
+
 int	main(int argc, char **argv)
 {
-	(void) argc;
-	(void) argv;
-	return 0;
+	if (argc != 4)
+	{
+		std::cout << "Wrong usage: sedIsForLosers [filename] [occurrence] [replacement]" << std::endl;
+		return EXIT_FAILURE;
+	}
+	return EXIT_SUCCESS;
 }
