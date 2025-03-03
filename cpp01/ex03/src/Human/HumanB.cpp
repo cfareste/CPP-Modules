@@ -6,7 +6,7 @@ HumanB::HumanB()
 	this->name = "Default name";
 }
 
-HumanB::HumanB(std::string &name)
+HumanB::HumanB(std::string name)
 {
 	this->name = name;
 }

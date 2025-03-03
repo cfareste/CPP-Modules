@@ -9,10 +9,10 @@ class Weapon
 
 	public:
 		Weapon();
-		Weapon(std::string &type);
+		Weapon(std::string type);
 
 		const std::string	&getType();
-		void				setType(std::string &newType);
+		void				setType(std::string newType);
 
 		Weapon & operator=(const Weapon &weapon);
 
