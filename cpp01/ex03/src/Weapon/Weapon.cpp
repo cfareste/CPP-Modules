@@ -20,6 +20,14 @@ void Weapon::setType(std::string &newType)
 	this->type = newType;
 }
 
+Weapon &Weapon::operator=(const Weapon &weapon)
+{
+	if (this == &weapon)
+		return *this;
+	this->type = weapon.type;
+	return *this;
+}
+
 Weapon::~Weapon()
 {
 }
