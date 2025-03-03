@@ -20,13 +20,10 @@ bool Replacer::open_files(std::string &path, std::ifstream &input_file, std::ofs
 	return true;
 }
 
-int Replacer::replace(std::string path, std::string occurrence, std::string replacement)
+void Replacer::replace_occurrences(std::ifstream &input_file, std::ofstream &output_file,
+	std::string &occurrence, std::string &replacement)
 {
-	std::ifstream	input_file;
-	std::ofstream	output_file;
-	std::string		line;
-
-	if (!Replacer::open_files(path, input_file, output_file)) return 1;
+	std::string	line;
 
 	while (std::getline(input_file, line))
 	{
@@ -41,6 +38,16 @@ int Replacer::replace(std::string path, std::string occurrence, std::string repl
 
 		output_file << line << std::endl;
 	}
+}
+
+int Replacer::replace(std::string path, std::string occurrence, std::string replacement)
+{
+	std::ifstream	input_file;
+	std::ofstream	output_file;
+
+	if (!Replacer::open_files(path, input_file, output_file)) return 1;
+
+	Replacer::replace_occurrences(input_file, output_file, occurrence, replacement);
 	output_file.close();
 	input_file.close();
 
