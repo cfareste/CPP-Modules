@@ -45,3 +45,4 @@ bin/
 # Extras
 .vscode
 *.log
+*.replace

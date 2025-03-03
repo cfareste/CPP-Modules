@@ -4,5 +4,5 @@
 
 class Replacer {
 	public:
-		static void	replace(std::string path, std::string occurrence, std::string replacement);
+		static int	replace(std::string path, std::string occurrence, std::string replacement);
 };
