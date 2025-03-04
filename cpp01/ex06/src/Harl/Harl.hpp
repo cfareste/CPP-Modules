@@ -9,7 +9,7 @@
 
 class Harl {
 	private:
-		std::string	complains[4];
+		std::string	complaints[4];
 
 		void	debug(void);
 		void	info(void);

@@ -27,22 +27,22 @@ void Harl::error(void)
 
 Harl::Harl()
 {
-	this->complains[0] = "DEBUG";
-	this->complains[1] = "INFO";
-	this->complains[2] = "WARNING";
-	this->complains[3] = "ERROR";
-	this->complain_behaviors[0] = &Harl::debug;
-	this->complain_behaviors[1] = &Harl::info;
-	this->complain_behaviors[2] = &Harl::warning;
-	this->complain_behaviors[3] = &Harl::error;
+	this->complaints[0] = "DEBUG";
+	this->complaints[1] = "INFO";
+	this->complaints[2] = "WARNING";
+	this->complaints[3] = "ERROR";
+	this->complaint_behaviors[0] = &Harl::debug;
+	this->complaint_behaviors[1] = &Harl::info;
+	this->complaint_behaviors[2] = &Harl::warning;
+	this->complaint_behaviors[3] = &Harl::error;
 }
 
 void Harl::complain(std::string level)
 {
 	for (int i = 0; i < 4; i++)
 	{
-		if (this->complains[i] == level)
-			(this->*complain_behaviors[i])();
+		if (this->complaints[i] == level)
+			(this->*complaint_behaviors[i])();
 	}
 }
 

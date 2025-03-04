@@ -32,10 +32,10 @@ void Harl::error(void)
 
 Harl::Harl()
 {
-	this->complains[0] = "DEBUG";
-	this->complains[1] = "INFO";
-	this->complains[2] = "WARNING";
-	this->complains[3] = "ERROR";
+	this->complaints[0] = "DEBUG";
+	this->complaints[1] = "INFO";
+	this->complaints[2] = "WARNING";
+	this->complaints[3] = "ERROR";
 }
 
 void Harl::complain(std::string level)
@@ -43,7 +43,7 @@ void Harl::complain(std::string level)
 	int	i;
 
 	for (i = 0; i < 4; i++)
-		if (level == this->complains[i]) break;
+		if (level == this->complaints[i]) break;
 
 	switch (i)
 	{

@@ -4,8 +4,8 @@
 
 class Harl {
 	private:
-		std::string	complains[4];
-		void	(Harl::*complain_behaviors[4])(void);
+		std::string	complaints[4];
+		void	(Harl::*complaint_behaviors[4])(void);
 
 		void	debug(void);
 		void	info(void);
