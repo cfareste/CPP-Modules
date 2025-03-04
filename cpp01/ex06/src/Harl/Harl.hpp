@@ -1,11 +1,15 @@
 #pragma once
 
+#define DEBUG_LEVEL 0
+#define INFO_LEVEL 1
+#define WARNING_LEVEL 2
+#define ERROR_LEVEL 3
+
 #include <string>
 
 class Harl {
 	private:
 		std::string	complains[4];
-		void	(Harl::*complain_behaviors[4])(void);
 
 		void	debug(void);
 		void	info(void);
