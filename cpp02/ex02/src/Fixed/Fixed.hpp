@@ -25,6 +25,10 @@ class Fixed {
 		bool	operator<=(const Fixed &fixed);
 		bool	operator==(const Fixed &fixed);
 		bool	operator!=(const Fixed &fixed);
+		Fixed	operator+(const Fixed &fixed);
+		Fixed	operator-(const Fixed &fixed);
+		Fixed	operator*(const Fixed &fixed);
+		Fixed	operator/(const Fixed &fixed);
 
 		~Fixed();
 };
