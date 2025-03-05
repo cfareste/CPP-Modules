@@ -107,6 +107,34 @@ Fixed	Fixed::operator/(const Fixed &fixed)
 	return Fixed(this->toFloat() / fixed.toFloat());
 }
 
+Fixed	&Fixed::operator++(void)
+{
+	this->fixed_point_value++;
+	return *this;
+}
+
+Fixed	Fixed::operator++(int)
+{
+	Fixed	temp = *this;
+
+	this->fixed_point_value++;
+	return temp;
+}
+
+Fixed	&Fixed::operator--(void)
+{
+	this->fixed_point_value--;
+	return *this;
+}
+
+Fixed	Fixed::operator--(int)
+{
+	Fixed	temp = *this;
+
+	this->fixed_point_value--;
+	return temp;
+}
+
 std::ostream	&operator<<(std::ostream &stream, const Fixed &fixed)
 {
 	stream << fixed.toFloat();
