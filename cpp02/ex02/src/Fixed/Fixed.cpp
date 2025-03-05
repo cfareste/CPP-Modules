@@ -57,6 +57,36 @@ Fixed	&Fixed::operator=(const Fixed &fixed)
 	return *this;
 }
 
+bool	Fixed::operator>(const Fixed &fixed)
+{
+	return this->fixed_point_value > fixed.fixed_point_value;
+}
+
+bool	Fixed::operator<(const Fixed &fixed)
+{
+	return this->fixed_point_value < fixed.fixed_point_value;
+}
+
+bool	Fixed::operator>=(const Fixed &fixed)
+{
+	return this->fixed_point_value >= fixed.fixed_point_value;
+}
+
+bool	Fixed::operator<=(const Fixed &fixed)
+{
+	return this->fixed_point_value <= fixed.fixed_point_value;
+}
+
+bool	Fixed::operator==(const Fixed &fixed)
+{
+	return this->fixed_point_value == fixed.fixed_point_value;
+}
+
+bool	Fixed::operator!=(const Fixed &fixed)
+{
+	return this->fixed_point_value != fixed.fixed_point_value;
+}
+
 std::ostream	&operator<<(std::ostream &stream, const Fixed &fixed)
 {
 	stream << fixed.toFloat();

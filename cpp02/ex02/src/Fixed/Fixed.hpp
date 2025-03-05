@@ -19,6 +19,12 @@ class Fixed {
 		int		toInt(void) const;
 
 		Fixed	&operator=(const Fixed &fixed);
+		bool	operator>(const Fixed &fixed);
+		bool	operator<(const Fixed &fixed);
+		bool	operator>=(const Fixed &fixed);
+		bool	operator<=(const Fixed &fixed);
+		bool	operator==(const Fixed &fixed);
+		bool	operator!=(const Fixed &fixed);
 
 		~Fixed();
 };
