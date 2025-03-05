@@ -36,6 +36,34 @@ int	Fixed::getRawBits(void) const
 	return this->fixed_point_value;
 }
 
+Fixed	&Fixed::min(Fixed &f1, Fixed &f2)
+{
+	if (f1 < f2) return f1;
+
+	return f2;
+}
+
+const Fixed	&Fixed::min(const Fixed &f1, const Fixed &f2)
+{
+	if (f1 < f2) return f1;
+
+	return f2;
+}
+
+Fixed	&Fixed::max(Fixed &f1, Fixed &f2)
+{
+	if (f1 > f2) return f1;
+
+	return f2;
+}
+
+const Fixed	&Fixed::max(const Fixed &f1, const Fixed &f2)
+{
+	if (f1 > f2) return f1;
+
+	return f2;
+}
+
 void	Fixed::setRawBits(int const raw)
 {
 	this->fixed_point_value = raw;
@@ -51,52 +79,52 @@ Fixed	&Fixed::operator=(const Fixed &fixed)
 	return *this;
 }
 
-bool	Fixed::operator>(const Fixed &fixed)
+bool	Fixed::operator>(const Fixed &fixed) const
 {
 	return this->fixed_point_value > fixed.fixed_point_value;
 }
 
-bool	Fixed::operator<(const Fixed &fixed)
+bool	Fixed::operator<(const Fixed &fixed) const
 {
 	return this->fixed_point_value < fixed.fixed_point_value;
 }
 
-bool	Fixed::operator>=(const Fixed &fixed)
+bool	Fixed::operator>=(const Fixed &fixed) const
 {
 	return this->fixed_point_value >= fixed.fixed_point_value;
 }
 
-bool	Fixed::operator<=(const Fixed &fixed)
+bool	Fixed::operator<=(const Fixed &fixed) const
 {
 	return this->fixed_point_value <= fixed.fixed_point_value;
 }
 
-bool	Fixed::operator==(const Fixed &fixed)
+bool	Fixed::operator==(const Fixed &fixed) const
 {
 	return this->fixed_point_value == fixed.fixed_point_value;
 }
 
-bool	Fixed::operator!=(const Fixed &fixed)
+bool	Fixed::operator!=(const Fixed &fixed) const
 {
 	return this->fixed_point_value != fixed.fixed_point_value;
 }
 
-Fixed	Fixed::operator+(const Fixed &fixed)
+Fixed	Fixed::operator+(const Fixed &fixed) const
 {
 	return Fixed(this->toFloat() + fixed.toFloat());
 }
 
-Fixed	Fixed::operator-(const Fixed &fixed)
+Fixed	Fixed::operator-(const Fixed &fixed) const
 {
 	return Fixed(this->toFloat() - fixed.toFloat());
 }
 
-Fixed	Fixed::operator*(const Fixed &fixed)
+Fixed	Fixed::operator*(const Fixed &fixed) const
 {
 	return Fixed(this->toFloat() * fixed.toFloat());
 }
 
-Fixed	Fixed::operator/(const Fixed &fixed)
+Fixed	Fixed::operator/(const Fixed &fixed) const
 {
 	return Fixed(this->toFloat() / fixed.toFloat());
 }
