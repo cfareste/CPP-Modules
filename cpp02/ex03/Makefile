@@ -33,7 +33,8 @@ INC = -I$(SRC)
 
 FILES = main.cpp \
 		Fixed.cpp \
-		Point.cpp
+		Point.cpp \
+		bsp.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
 # ------------------ #
