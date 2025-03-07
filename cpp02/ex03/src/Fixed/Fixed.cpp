@@ -75,7 +75,7 @@ Fixed	&Fixed::operator=(const Fixed &fixed)
 	{
 		return *this;
 	}
-	this->fixed_point_value = fixed.getRawBits();
+	this->setRawBits(fixed.getRawBits());
 	return *this;
 }
 
