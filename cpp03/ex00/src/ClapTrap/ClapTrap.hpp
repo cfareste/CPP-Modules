@@ -1,5 +1,6 @@
 #pragma once
 
+#include <fstream>
 #include <string>
 
 class ClapTrap {
@@ -12,7 +13,7 @@ class ClapTrap {
 		ClapTrap();
 
 	public:
-		ClapTrap(std::string &name);
+		ClapTrap(const std::string &name);
 		ClapTrap(const ClapTrap &ct);
 
 		void	attack(const std::string &target);

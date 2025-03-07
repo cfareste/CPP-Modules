@@ -7,7 +7,7 @@ ClapTrap::ClapTrap()
 	std::cout << "Default ClapTrap constructor called" << std::endl;
 }
 
-ClapTrap::ClapTrap(std::string &name)
+ClapTrap::ClapTrap(const std::string &name)
 {
 	std::cout << "ClapTrap constructor called" << std::endl;
 	this->name = name;
@@ -20,6 +20,51 @@ ClapTrap::ClapTrap(const ClapTrap &ct)
 {
 	std::cout << "ClapTrap copy constructor called" << std::endl;
 	*this = ct;
+}
+
+void ClapTrap::attack(const std::string &target)
+{
+	if (this->hit_points <= 0)
+	{
+		std::cout << "ClapTrap is out of combat!" << std::endl;
+		return ;
+	}
+	if (this->energy_points <= 0)
+	{
+		std::cout << "ClapTrap is too tired to combat" << std::endl;
+		return ;
+	}
+
+	std::cout << "ClapTrap " << this->name
+		<< " attacks " << target
+		<< " causing " << this->attack_damage << " points of damage!" << std::endl;
+	this->energy_points--;
+}
+
+void ClapTrap::takeDamage(unsigned int amount)
+{
+	std::cout << "ClapTrap " << this->name
+		<< " took " << amount << " points of damage" << std::endl;
+	this->hit_points -= amount;
+}
+
+void ClapTrap::beRepaired(unsigned int amount)
+{
+	if (this->hit_points <= 0)
+	{
+		std::cout << "ClapTrap is out of combat!" << std::endl;
+		return ;
+	}
+	if (this->energy_points <= 0)
+	{
+		std::cout << "ClapTrap is too tired to combat" << std::endl;
+		return ;
+	}
+
+	std::cout << "ClapTrap " << this->name
+		<< " repaired " << amount << " hit points " << std::endl;
+	this->hit_points += amount;
+	this->energy_points--;
 }
 
 ClapTrap	&ClapTrap::operator=(const ClapTrap &ct)
