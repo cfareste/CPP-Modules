@@ -8,16 +8,16 @@ Point::Point(const float x, const float y): x(x), y(y)
 {
 }
 
-Point::Point(Point &point): x(point.x), y(point.y)
+Point::Point(const Point &point): x(point.x), y(point.y)
 {
 }
 
-const Fixed	&Point::getX()
+const Fixed	&Point::getX() const
 {
 	return this->x;
 }
 
-const Fixed	&Point::getY()
+const Fixed	&Point::getY() const
 {
 	return this->y;
 }
@@ -30,4 +30,10 @@ Point	&Point::operator=(const Point &point)
 
 Point::~Point()
 {
+}
+
+std::ostream	&operator<<(std::ostream &stream, const Point &point)
+{
+	stream << "(" << point.getX() << ", " <<  point.getY() << ")";
+	return stream;
 }
