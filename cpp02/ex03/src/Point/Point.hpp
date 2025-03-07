@@ -17,6 +17,7 @@ class Point {
 		const Fixed	&getY() const;
 
 		Point	&operator=(const Point &point);
+		bool	operator==(const Point &point) const;
 
 		~Point();
 };

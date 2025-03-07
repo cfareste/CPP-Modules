@@ -28,6 +28,11 @@ Point	&Point::operator=(const Point &point)
 	return *this;
 }
 
+bool	Point::operator==(const Point &point) const
+{
+	return this->x.toInt() == point.x.toInt() && this->y.toInt() == point.y.toInt();
+}
+
 Point::~Point()
 {
 }
