@@ -22,6 +22,21 @@ ClapTrap::ClapTrap(const ClapTrap &ct)
 	*this = ct;
 }
 
+std::string	&ClapTrap::getName()
+{
+	return this->name;
+}
+
+int	ClapTrap::getHitPoints()
+{
+	return this->hit_points;
+}
+
+int	ClapTrap::getEnergyPoints()
+{
+	return this->energy_points;
+}
+
 void ClapTrap::attack(const std::string &target)
 {
 	if (this->hit_points <= 0)
@@ -77,6 +92,13 @@ ClapTrap	&ClapTrap::operator=(const ClapTrap &ct)
 	this->energy_points = ct.energy_points;
 	this->attack_damage = ct.attack_damage;
 	return *this;
+}
+
+std::ostream	&operator<<(std::ostream &stream, ClapTrap &clap_trap)
+{
+	stream << "ClapTrap " << clap_trap.getName() << " (HPs, EPs): "
+		<< clap_trap.getHitPoints() << ", " << clap_trap.getEnergyPoints();
+	return stream;
 }
 
 ClapTrap::~ClapTrap()

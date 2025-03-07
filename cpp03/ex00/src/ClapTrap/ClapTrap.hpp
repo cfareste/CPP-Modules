@@ -16,6 +16,10 @@ class ClapTrap {
 		ClapTrap(const std::string &name);
 		ClapTrap(const ClapTrap &ct);
 
+		std::string	&getName();
+		int			getHitPoints();
+		int			getEnergyPoints();
+
 		void	attack(const std::string &target);
 		void	takeDamage(unsigned int amount);
 		void	beRepaired(unsigned int amount);
@@ -24,3 +28,5 @@ class ClapTrap {
 
 		~ClapTrap();
 };
+
+std::ostream	&operator<<(std::ostream &stream, ClapTrap &clap_trap);
