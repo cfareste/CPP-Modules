@@ -9,7 +9,7 @@ ClapTrap::ClapTrap()
 
 ClapTrap::ClapTrap(const std::string &name)
 {
-	std::cout << "ClapTrap constructor called" << std::endl;
+	std::cout << "ClapTrap " << name << " constructor called" << std::endl;
 	this->name = name;
 	this->hit_points = 10;
 	this->energy_points = 10;
@@ -41,12 +41,12 @@ void ClapTrap::attack(const std::string &target)
 {
 	if (this->hit_points <= 0)
 	{
-		std::cout << "ClapTrap is out of combat!" << std::endl;
+		std::cout << "ClapTrap " << this->name << " is out of combat!" << std::endl;
 		return ;
 	}
 	if (this->energy_points <= 0)
 	{
-		std::cout << "ClapTrap is too tired to combat" << std::endl;
+		std::cout << "ClapTrap " << this->name << " is too tired to combat" << std::endl;
 		return ;
 	}
 
@@ -58,21 +58,29 @@ void ClapTrap::attack(const std::string &target)
 
 void ClapTrap::takeDamage(unsigned int amount)
 {
+	if (this->hit_points <= 0)
+	{
+		std::cout << "ClapTrap " << this->name << " is already dead" << std::endl;
+		return ;
+	}
+
 	std::cout << "ClapTrap " << this->name
 		<< " took " << amount << " points of damage" << std::endl;
 	this->hit_points -= amount;
+	if (this->hit_points < 0)
+		this->hit_points = 0;
 }
 
 void ClapTrap::beRepaired(unsigned int amount)
 {
 	if (this->hit_points <= 0)
 	{
-		std::cout << "ClapTrap is out of combat!" << std::endl;
+		std::cout << "ClapTrap " << this->name << " is out of combat!" << std::endl;
 		return ;
 	}
 	if (this->energy_points <= 0)
 	{
-		std::cout << "ClapTrap is too tired to combat" << std::endl;
+		std::cout << "ClapTrap " << this->name << " is too tired to be repaired" << std::endl;
 		return ;
 	}
 

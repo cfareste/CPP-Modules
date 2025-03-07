@@ -28,5 +28,19 @@ int	main(void)
 	std::cout << xanax << std::endl;
 	std::cout << antares << std::endl;
 
+	xanax.beRepaired(1);
+	xanax.beRepaired(1);
+	xanax.beRepaired(1);
+	xanax.beRepaired(1);
+	xanax.beRepaired(1);
+	xanax.beRepaired(1);
+	xanax.beRepaired(1);
+	xanax.beRepaired(1);
+	xanax.beRepaired(1);
+
+	std::cout << trinity << std::endl;
+	std::cout << xanax << std::endl;
+	std::cout << antares << std::endl;
+
 	return 0;
 }
