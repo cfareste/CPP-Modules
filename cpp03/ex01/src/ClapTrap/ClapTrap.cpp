@@ -37,6 +37,11 @@ int	ClapTrap::getEnergyPoints()
 	return this->energy_points;
 }
 
+void	ClapTrap::setName(const std::string &name)
+{
+	this->name = name;
+}
+
 void	ClapTrap::setHitPoints(unsigned int hit_points)
 {
 	this->hit_points = hit_points;
@@ -45,6 +50,11 @@ void	ClapTrap::setHitPoints(unsigned int hit_points)
 void	ClapTrap::setEnergyPoints(unsigned int energy_points)
 {
 	this->energy_points = energy_points;
+}
+
+void	ClapTrap::setAttackDamage(unsigned int attack_damage)
+{
+	this->attack_damage = attack_damage;
 }
 
 void ClapTrap::attack(const std::string &target)
