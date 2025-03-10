@@ -40,6 +40,11 @@ void	ScavTrap::attack(const std::string &target)
 	this->setEnergyPoints(this->getEnergyPoints() - 1);
 }
 
+void	ScavTrap::guardGate()
+{
+	std::cout << "ScavTrap " << this->getName() << " is now in gate keeper mode" << std::endl;
+}
+
 ScavTrap	&ScavTrap::operator=(const ScavTrap &st)
 {
 	std::cout << "ScavTrap copy assignment constructor called" << std::endl;
