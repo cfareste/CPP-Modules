@@ -22,19 +22,24 @@ ClapTrap::ClapTrap(const ClapTrap &ct)
 	*this = ct;
 }
 
-std::string	&ClapTrap::getName()
+const std::string	&ClapTrap::getName() const
 {
 	return this->name;
 }
 
-int	ClapTrap::getHitPoints()
+int	ClapTrap::getHitPoints() const
 {
 	return this->hit_points;
 }
 
-int	ClapTrap::getEnergyPoints()
+int	ClapTrap::getEnergyPoints() const
 {
 	return this->energy_points;
+}
+
+int	ClapTrap::getAttackDamage() const
+{
+	return this->attack_damage;
 }
 
 void	ClapTrap::setName(const std::string &name)

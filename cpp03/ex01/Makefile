@@ -32,14 +32,16 @@ BIN_DIR = bin/
 INC = -I$(SRC)
 
 FILES = main.cpp \
-		ClapTrap.cpp
+		ClapTrap.cpp \
+		ScavTrap.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
 # ------------------ #
 
 # --- # vpath # ---- #
 vpath %.cpp $(SRC):\
-			$(SRC)/ClapTrap
+			$(SRC)/ClapTrap:\
+			$(SRC)/ScavTrap
 # ------------------ #
 
 
