@@ -22,7 +22,7 @@ int	main(void)
 
 	xanax.beRepaired(3);
 	antares.beRepaired(4);
-	antares.attack("Reggin");
+	antares.attack("Trinity");
 
 	std::cout << trinity << std::endl;
 	std::cout << xanax << std::endl;
