@@ -25,7 +25,7 @@ void	FragTrap::highFivesGuys()
 {
 	std::string	high_five;
 
-	std::cout << "FragTrap " << this->getName() << ": give me a high five! " << std::endl;
+	std::cout << "FragTrap " << this->getName() << ": give me a high five!: ";
 	std::getline(std::cin, high_five);
 }
 

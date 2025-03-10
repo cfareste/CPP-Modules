@@ -1,5 +1,6 @@
 #include "ClapTrap/ClapTrap.hpp"
 #include "ScavTrap/ScavTrap.hpp"
+#include "FragTrap/FragTrap.hpp"
 #include <iostream>
 
 int	main(void)
@@ -49,6 +50,12 @@ int	main(void)
 
 	cake.attack("xanax");
 	cake.guardGate();
+
+	FragTrap	nautilus = FragTrap("Nautilus");
+
+	std::cout << nautilus << std::endl;
+
+	nautilus.highFivesGuys();
 
 	return 0;
 }
