@@ -1,4 +1,5 @@
 #include "ClapTrap/ClapTrap.hpp"
+#include "ScavTrap/ScavTrap.hpp"
 #include <iostream>
 
 int	main(void)
@@ -41,6 +42,13 @@ int	main(void)
 	std::cout << trinity << std::endl;
 	std::cout << xanax << std::endl;
 	std::cout << antares << std::endl;
+
+	ScavTrap	cake = ScavTrap("Cake");
+
+	std::cout << cake << std::endl;
+
+	cake.attack("xanax");
+	cake.guardGate();
 
 	return 0;
 }
