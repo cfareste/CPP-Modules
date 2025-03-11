@@ -1,6 +1,7 @@
 #include "ClapTrap/ClapTrap.hpp"
 #include "ScavTrap/ScavTrap.hpp"
 #include "FragTrap/FragTrap.hpp"
+#include "DiamondTrap/DiamondTrap.hpp"
 #include <iostream>
 
 int	main(void)
@@ -56,6 +57,12 @@ int	main(void)
 	std::cout << nautilus << std::endl;
 
 	nautilus.highFivesGuys();
+
+	DiamondTrap	vortex = DiamondTrap("Vortex");
+
+	std::cout << vortex << std::endl;
+	vortex.attack("Nautilus");
+	vortex.whoAmI();
 
 	return 0;
 }
