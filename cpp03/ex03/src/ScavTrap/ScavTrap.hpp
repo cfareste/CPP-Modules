@@ -2,8 +2,8 @@
 
 #include "ClapTrap/ClapTrap.hpp"
 
-class ScavTrap : public ClapTrap {
-	private:
+class ScavTrap : virtual public ClapTrap {
+	protected:
 		ScavTrap();
 
 	public:

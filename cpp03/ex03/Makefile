@@ -34,7 +34,8 @@ INC = -I$(SRC)
 FILES = main.cpp \
 		ClapTrap.cpp \
 		ScavTrap.cpp \
-		FragTrap.cpp
+		FragTrap.cpp \
+		DiamondTrap.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
 # ------------------ #
@@ -43,7 +44,8 @@ DEPS = $(OBJS:%.o=%.d)
 vpath %.cpp $(SRC):\
 			$(SRC)/ClapTrap:\
 			$(SRC)/ScavTrap:\
-			$(SRC)/FragTrap
+			$(SRC)/FragTrap:\
+			$(SRC)/DiamondTrap
 # ------------------ #
 
 
