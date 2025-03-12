@@ -10,9 +10,9 @@ class Animal {
 		Animal();
 		Animal(const Animal &animal);
 
-		void	makeSound();
+		virtual void	makeSound();
 
 		Animal	&operator=(const Animal &animal);
 
-		~Animal();
+		virtual ~Animal();
 };
