@@ -33,7 +33,8 @@ INC = -I$(SRC)
 
 FILES = main.cpp \
 		Animal.cpp \
-		Dog.cpp
+		Dog.cpp \
+		Cat.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
 # ------------------ #
@@ -41,7 +42,8 @@ DEPS = $(OBJS:%.o=%.d)
 # --- # vpath # ---- #
 vpath %.cpp $(SRC):\
 			$(SRC)/Animal:\
-			$(SRC)/Animal/Dog
+			$(SRC)/Animal/Dog:\
+			$(SRC)/Animal/Cat
 # ------------------ #
 
 
