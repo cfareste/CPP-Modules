@@ -13,7 +13,7 @@ Brain::Brain(const Brain &brain)
 	*this = brain;
 }
 
-void	Brain::addIdea(std::string &idea)
+void	Brain::addIdea(const std::string &idea)
 {
 	if (this->last_idea_index < 0)
 	{
@@ -36,6 +36,11 @@ std::string	Brain::getIdea(int index)
 		return "";
 	}
 	return this->ideas[index];
+}
+
+int	Brain::getNumOfIdeas()
+{
+	return this->last_idea_index;
 }
 
 Brain	&Brain::operator=(const Brain &brain)
