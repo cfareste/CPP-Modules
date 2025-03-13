@@ -12,6 +12,11 @@ Animal::Animal(const Animal &animal)
 	*this = animal;
 }
 
+std::string	&Animal::getType()
+{
+	return this->type;
+}
+
 void	Animal::makeSound()
 {
 	std::cout << "What sound does an animal do?" << std::endl;
