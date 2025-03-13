@@ -23,6 +23,11 @@ void	Cat::makeSound()
 	std::cout << "MEEEEOOOWW!" << std::endl;
 }
 
+void	Cat::addThought(const std::string &thought)
+{
+	this->brain->addIdea(thought);
+}
+
 void	Cat::materializeThoughts()
 {
 	std::cout << "(((Inside this kitten's brain...))):" << std::endl;
@@ -39,7 +44,6 @@ Cat	&Cat::operator=(const Cat &cat)
 	if (this == &cat) return *this;
 
 	this->type = cat.type;
-	delete this->brain;
 	*this->brain = *cat.brain;
 	return *this;
 }

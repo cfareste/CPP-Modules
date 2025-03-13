@@ -23,6 +23,11 @@ void	Dog::makeSound()
 	std::cout << "BARK BARK!" << std::endl;
 }
 
+void	Dog::addThought(const std::string &thought)
+{
+	this->brain->addIdea(thought);
+}
+
 void	Dog::materializeThoughts()
 {
 	std::cout << "(((Inside this puppy's brain...))):" << std::endl;
@@ -39,7 +44,6 @@ Dog	&Dog::operator=(const Dog &dog)
 	if (this == &dog) return *this;
 
 	this->type = dog.type;
-	delete this->brain;
 	*this->brain = *dog.brain;
 	return *this;
 }

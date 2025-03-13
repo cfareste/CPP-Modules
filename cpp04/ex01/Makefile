@@ -36,7 +36,8 @@ FILES = main.cpp \
 		Dog.cpp \
 		Cat.cpp \
 		WrongAnimal.cpp \
-		WrongCat.cpp
+		WrongCat.cpp \
+		Brain.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
 # ------------------ #
@@ -47,7 +48,8 @@ vpath %.cpp $(SRC):\
 			$(SRC)/Animal/Dog:\
 			$(SRC)/Animal/Cat:\
 			$(SRC)/WrongAnimal:\
-			$(SRC)/WrongAnimal/WrongCat
+			$(SRC)/WrongAnimal/WrongCat:\
+			$(SRC)/Brain
 # ------------------ #
 
 
