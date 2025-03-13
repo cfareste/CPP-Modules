@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Animal/Animal.hpp"
+#include "AAnimal/AAnimal.hpp"
 #include "Brain/Brain.hpp"
 
-class Dog : public Animal {
+class Dog : public AAnimal {
 	private:
 		Brain	*brain;
 

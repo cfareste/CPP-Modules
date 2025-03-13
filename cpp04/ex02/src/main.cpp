@@ -1,13 +1,13 @@
-#include "Animal/Animal.hpp"
-#include "Animal/Dog/Dog.hpp"
-#include "Animal/Cat/Cat.hpp"
+#include "AAnimal/AAnimal.hpp"
+#include "AAnimal/Dog/Dog.hpp"
+#include "AAnimal/Cat/Cat.hpp"
 #include "WrongAnimal/WrongAnimal.hpp"
 #include "WrongAnimal/WrongCat/WrongCat.hpp"
 #include <iostream>
 
 int	main(void)
 {
-	Animal	*pets[] = {
+	AAnimal	*pets[] = {
 		new Dog(),
 		new Cat(),
 		new Cat(),
