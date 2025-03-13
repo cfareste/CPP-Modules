@@ -7,26 +7,64 @@
 
 int	main(void)
 {
-	Animal	*animal = new Animal();
-	Animal	*dog = new Dog();
-	Animal	*cat = new Cat();
-	WrongAnimal	*wrong_animal = new WrongAnimal();
-	WrongAnimal	*wrong_cat = new WrongCat();
+	Animal	*pets[] = {
+		new Dog(),
+		new Cat(),
+		new Cat(),
+		new Dog(),
+		new Cat(),
+		new Dog()
+	};
 
-	std::cout << dog->getType() << std::endl;
-	std::cout << cat->getType() << std::endl;
-	std::cout << wrong_cat->getType() << std::endl;
-	animal->makeSound();
-	dog->makeSound();
-	cat->makeSound();
-	wrong_animal->makeSound();
-	wrong_cat->makeSound();
+	for (int i = 0; i < 6; i++)
+	{
+		std::cout << "Hey! I am a " << pets[i]->getType() << ", and I usually say ";
+		pets[i]->makeSound();
+	}
+	for (int i = 0; i < 6; i++)
+	{
+		delete pets[i];
+	}
 
-	delete animal;
-	delete dog;
-	delete cat;
-	delete wrong_animal;
-	delete wrong_cat;
+	std::cout << std::endl;
+
+	Dog	*laika = new Dog();
+	Dog	*neil = new Dog();
+
+	laika->materializeThoughts();
+	neil->materializeThoughts();
+
+	neil->addThought("Lick my human's face");
+	neil->addThought("Concern about my human leaving the house");
+	neil->addThought("Massive obliteration to every piece of furniture of my human's house");
+
+	laika->materializeThoughts();
+	neil->materializeThoughts();
+
+	*laika = *neil;
+
+	laika->materializeThoughts();
+	neil->materializeThoughts();
+
+	delete laika;
+	delete neil;
+
+	std::cout << std::endl;
+
+	Cat	*garfield = new Cat();
+
+	garfield->addThought("Play with a wool skein");
+	garfield->addThought("Hunt some innocent cockroach");
+	garfield->addThought("Scratch the hell out of my servant's (human) forearm");
+
+	garfield->materializeThoughts();
+
+	Cat	*paws = new Cat(*garfield);
+
+	paws->materializeThoughts();
+
+	delete garfield;
+	delete paws;
 
 	return 0;
 }
