@@ -44,6 +44,7 @@ vpath %.cpp $(SRC):\
 			$(SRC)/Materia:\
 			$(SRC)/Materia/Ice:\
 			$(SRC)/Materia/Cure:\
+			$(SRC)/Character
 # ------------------ #
 
 
