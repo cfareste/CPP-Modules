@@ -32,14 +32,16 @@ BIN_DIR = bin/
 INC = -I$(SRC)
 
 FILES = main.cpp \
-		AMateria.cpp
+		AMateria.cpp \
+		Ice.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
 # ------------------ #
 
 # --- # vpath # ---- #
 vpath %.cpp $(SRC):\
-			$(SRC)/AMateria
+			$(SRC)/Materia:\
+			$(SRC)/Ice
 # ------------------ #
 
 
