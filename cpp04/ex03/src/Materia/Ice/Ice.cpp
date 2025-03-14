@@ -25,6 +25,9 @@ void	Ice::use(/*ICharacter &target*/)
 Ice	&Ice::operator=(const Ice &ice)
 {
 	std::cout << "Ice copy assignment constructor called" << std::endl;
+	if (this == &ice) return *this;
+
+	this->type = ice.type;
 	return *this;
 }
 

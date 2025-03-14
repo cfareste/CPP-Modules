@@ -33,7 +33,8 @@ INC = -I$(SRC)
 
 FILES = main.cpp \
 		AMateria.cpp \
-		Ice.cpp
+		Ice.cpp \
+		Cure.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
 # ------------------ #
@@ -41,7 +42,8 @@ DEPS = $(OBJS:%.o=%.d)
 # --- # vpath # ---- #
 vpath %.cpp $(SRC):\
 			$(SRC)/Materia:\
-			$(SRC)/Ice
+			$(SRC)/Materia/Ice:\
+			$(SRC)/Materia/Cure:\
 # ------------------ #
 
 
