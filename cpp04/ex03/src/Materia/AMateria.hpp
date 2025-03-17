@@ -3,6 +3,8 @@
 #include "Character/ICharacter.hpp"
 #include <string>
 
+class ICharacter;
+
 class AMateria {
 	protected:
 		std::string	type;

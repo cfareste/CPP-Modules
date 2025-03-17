@@ -4,6 +4,7 @@
 Cure::Cure()
 {
 	std::cout << "Cure default constructor called" << std::endl;
+	this->type = "cure";
 }
 
 Cure::Cure(const Cure &cure)

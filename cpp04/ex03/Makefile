@@ -34,7 +34,8 @@ INC = -I$(SRC)
 FILES = main.cpp \
 		AMateria.cpp \
 		Ice.cpp \
-		Cure.cpp
+		Cure.cpp \
+		Character.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
 # ------------------ #
