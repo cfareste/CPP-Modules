@@ -35,7 +35,8 @@ FILES = main.cpp \
 		AMateria.cpp \
 		Ice.cpp \
 		Cure.cpp \
-		Character.cpp
+		Character.cpp \
+		MateriaSource.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
 # ------------------ #
@@ -45,7 +46,8 @@ vpath %.cpp $(SRC):\
 			$(SRC)/Materia:\
 			$(SRC)/Materia/Ice:\
 			$(SRC)/Materia/Cure:\
-			$(SRC)/Character
+			$(SRC)/Character:\
+			$(SRC)/MateriaSource
 # ------------------ #
 
 
