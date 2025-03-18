@@ -3,13 +3,11 @@
 
 Ice::Ice()
 {
-	std::cout << "Ice default constructor called" << std::endl;
 	this->type = "ice";
 }
 
 Ice::Ice(const Ice &ice)
 {
-	std::cout << "Ice copy constructor called" << std::endl;
 	*this = ice;
 }
 
@@ -25,7 +23,6 @@ void	Ice::use(ICharacter &target)
 
 Ice	&Ice::operator=(const Ice &ice)
 {
-	std::cout << "Ice copy assignment constructor called" << std::endl;
 	if (this == &ice) return *this;
 
 	this->type = ice.type;
@@ -34,5 +31,4 @@ Ice	&Ice::operator=(const Ice &ice)
 
 Ice::~Ice()
 {
-	std::cout << "Ice destructor called" << std::endl;
 }

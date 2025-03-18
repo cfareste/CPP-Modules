@@ -3,13 +3,11 @@
 
 Cure::Cure()
 {
-	std::cout << "Cure default constructor called" << std::endl;
 	this->type = "cure";
 }
 
 Cure::Cure(const Cure &cure)
 {
-	std::cout << "Cure copy constructor called" << std::endl;
 	*this = cure;
 }
 
@@ -25,7 +23,6 @@ void	Cure::use(ICharacter &target)
 
 Cure	&Cure::operator=(const Cure &cure)
 {
-	std::cout << "Cure copy assignment constructor called" << std::endl;
 	if (this == &cure) return *this;
 
 	this->type = cure.type;
@@ -34,5 +31,4 @@ Cure	&Cure::operator=(const Cure &cure)
 
 Cure::~Cure()
 {
-	std::cout << "Cure destructor called" << std::endl;
 }

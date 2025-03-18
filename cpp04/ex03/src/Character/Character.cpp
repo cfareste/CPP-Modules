@@ -3,7 +3,6 @@
 
 Character::Character()
 {
-	std::cout << "Character default constructor called" << std::endl;
 	for (int i = 0; i < INVENTORY_SIZE; i++)
 	{
 		this->inventory[i] = nullptr;
@@ -12,7 +11,6 @@ Character::Character()
 
 Character::Character(const std::string &name)
 {
-	std::cout << "Character constructor called" << std::endl;
 	this->name = name;
 	for (int i = 0; i < INVENTORY_SIZE; i++)
 	{
@@ -22,7 +20,6 @@ Character::Character(const std::string &name)
 
 Character::Character(const Character &character)
 {
-	std::cout << "Character copy constructor called" << std::endl;
 	for (int i = 0; i < INVENTORY_SIZE; i++)
 	{
 		this->inventory[i] = nullptr;
@@ -43,7 +40,6 @@ void	Character::equip(AMateria *m)
 	{
 		if (!this->inventory[i])
 		{
-			std::cout << this->name << ": Equipping '" << m->getType() << "' materia" << std::endl;
 			this->inventory[i] = m;
 			break ;
 		}
@@ -54,9 +50,6 @@ void	Character::unequip(int idx)
 {
 	if (idx < 0 || idx >= INVENTORY_SIZE || !this->inventory[idx]) return ;
 
-	std::cout << this->name
-		<< ": Unquipping '" << this->inventory[idx]->getType()
-		<< "' materia" << std::endl;
 	this->inventory[idx] = nullptr;
 }
 
@@ -69,7 +62,6 @@ void	Character::use(int idx, ICharacter &target)
 
 Character	&Character::operator=(const Character &character)
 {
-	std::cout << "Copy assignment constructor called" << std::endl;
 	if (this == &character) return *this;
 
 	this->name = character.name;
@@ -87,7 +79,6 @@ Character	&Character::operator=(const Character &character)
 
 Character::~Character()
 {
-	std::cout << "Character destructor called" << std::endl;
 	for (int i = 0; i < INVENTORY_SIZE; i++)
 	{
 		if (this->inventory[i])

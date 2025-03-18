@@ -3,18 +3,15 @@
 
 AMateria::AMateria()
 {
-	std::cout << "AMateria default constructor called" << std::endl;
 }
 
 AMateria::AMateria(std::string const &type)
 {
-	std::cout << "AMateria constructor called" << std::endl;
 	this->type = type;
 }
 
 AMateria::AMateria(const AMateria &materia)
 {
-	std::cout << "AMateria copy constructor called" << std::endl;
 	*this = materia;
 }
 
@@ -31,7 +28,6 @@ void	AMateria::use(ICharacter &target)
 
 AMateria	&AMateria::operator=(const AMateria &materia)
 {
-	std::cout << "AMateria copy assignment constructor called" << std::endl;
 	if (this == &materia) return *this;
 
 	this->type = materia.type;
@@ -40,5 +36,4 @@ AMateria	&AMateria::operator=(const AMateria &materia)
 
 AMateria::~AMateria()
 {
-	std::cout << "AMateria destructor called" << std::endl;
 }
