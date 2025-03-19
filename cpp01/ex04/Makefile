@@ -22,7 +22,7 @@ CYAN = \033[0;36m
 
 
 # ---- # Vars # ---- #
-NAME = sedIsForLosers
+NAME = a.out
 
 C++ = c++
 FLAGS = -Wall -Wextra -Werror -std=c++98 -g -fsanitize=address
