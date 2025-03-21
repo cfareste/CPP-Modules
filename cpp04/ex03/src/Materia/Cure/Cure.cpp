@@ -6,7 +6,7 @@ Cure::Cure()
 	this->type = "cure";
 }
 
-Cure::Cure(const Cure &cure)
+Cure::Cure(const Cure &cure) : AMateria()
 {
 	*this = cure;
 }

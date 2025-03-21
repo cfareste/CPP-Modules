@@ -12,7 +12,7 @@ Cat::Cat()
 	this->brain->addIdea("Scratch inferior beings");
 }
 
-Cat::Cat(const Cat &cat)
+Cat::Cat(const Cat &cat) : AAnimal()
 {
 	std::cout << "Cat copy constructor called" << std::endl;
 	this->brain = new Brain();

@@ -5,7 +5,7 @@ Character::Character()
 {
 	for (int i = 0; i < INVENTORY_SIZE; i++)
 	{
-		this->inventory[i] = nullptr;
+		this->inventory[i] = NULL;
 	}
 }
 
@@ -14,7 +14,7 @@ Character::Character(const std::string &name)
 	this->name = name;
 	for (int i = 0; i < INVENTORY_SIZE; i++)
 	{
-		this->inventory[i] = nullptr;
+		this->inventory[i] = NULL;
 	}
 }
 
@@ -22,7 +22,7 @@ Character::Character(const Character &character)
 {
 	for (int i = 0; i < INVENTORY_SIZE; i++)
 	{
-		this->inventory[i] = nullptr;
+		this->inventory[i] = NULL;
 	}
 	*this = character;
 }
@@ -50,7 +50,7 @@ void	Character::unequip(int idx)
 {
 	if (idx < 0 || idx >= INVENTORY_SIZE || !this->inventory[idx]) return ;
 
-	this->inventory[idx] = nullptr;
+	this->inventory[idx] = NULL;
 }
 
 void	Character::use(int idx, ICharacter &target)
@@ -67,7 +67,7 @@ Character	&Character::operator=(const Character &character)
 	this->name = character.name;
 	for (int i = 0; i < INVENTORY_SIZE; i++)
 	{
-		AMateria	*new_materia = nullptr;
+		AMateria	*new_materia = NULL;
 		if (this->inventory[i])
 			delete this->inventory[i];
 		if (character.inventory[i])
