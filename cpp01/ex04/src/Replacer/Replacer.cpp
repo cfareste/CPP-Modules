@@ -4,13 +4,13 @@
 
 bool Replacer::open_files(std::string &path, std::ifstream &input_file, std::ofstream &output_file)
 {
-	input_file.open(path, std::ios::in);
+	input_file.open(path.c_str(), std::ios::in);
 	if (!input_file.is_open())
 	{
 		std::cout << "Error while opening '" << path << "' file" << std::endl;
 		return false;
 	}
-	output_file.open(path + ".replace", std::ios::trunc);
+	output_file.open((path + ".replace").c_str(), std::ios::trunc);
 	if (!output_file.is_open())
 	{
 		std::cout << "Error while opening output file" << std::endl;
