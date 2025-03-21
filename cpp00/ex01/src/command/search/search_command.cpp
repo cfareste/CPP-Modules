@@ -3,6 +3,7 @@
 #include "utils/utils.hpp"
 #include <iostream>
 #include <iomanip>
+#include <stdlib.h>
 
 static void	print_separator()
 {
@@ -36,7 +37,7 @@ static bool	validate_index(std::string &input, uint8_t max_index)
 		return false;
 	}
 
-	int	index = std::stoi(input);
+	int	index = std::atoi(input.c_str());
 	if (index < 0 || index + 1 > max_index)
 	{
 		std::cout << "The contact's index is out of bounds" << std::endl;
@@ -60,7 +61,7 @@ void	search_contacts(PhoneBook &phone_book)
 	for (int i = 0; i < saved_contacts; i++)
 	{
 		print_separator();
-		print_field(std::to_string(i));
+		std::cout << std::setw(10) << i;
 		print_separator();
 		print_field(phone_book.get_contact_by_index(i).get_first_name());
 		print_separator();
@@ -77,6 +78,6 @@ void	search_contacts(PhoneBook &phone_book)
 		return ;
 	}
 
-	int	index = std::stoi(input);
+	int	index = std::atoi(input.c_str());
 	std::cout << phone_book.get_contact_by_index(index).to_string() << std::endl;
 }

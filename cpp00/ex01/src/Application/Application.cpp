@@ -2,6 +2,7 @@
 #include "command/add/add_command.hpp"
 #include "command/search/search_command.hpp"
 #include <iostream>
+#include <stdlib.h>
 
 Application::Application()
 {

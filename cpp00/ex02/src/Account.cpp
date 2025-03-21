@@ -1,6 +1,8 @@
 #include "Account.hpp"
 #include <iostream>
-#include <iomanip>
+#include <time.h>
+#include <ctime>
+#include <cmath>
 
 int	Account::_nbAccounts = 0;
 int	Account::_totalAmount = 0;
@@ -105,8 +107,12 @@ void	Account::displayStatus(void) const
 
 void	Account::_displayTimestamp(void)
 {
-    std::time_t	t = std::time(nullptr);
-    std::tm*	now = std::localtime(&t);
+	std::time_t	date;
+	char 		buff[124];
+	tm			*formatted_date;
 
-    std::cout << std::put_time(now, "[%Y%m%d_%H%M%S] ");
+	date = time(NULL);
+	formatted_date = gmtime(&date);
+	strftime(buff, sizeof buff, "[%Y%m%d_%H%M%S] ", formatted_date);
+	std::cout << buff;
 }
