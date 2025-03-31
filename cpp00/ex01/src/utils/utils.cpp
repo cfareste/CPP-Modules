@@ -1,4 +1,5 @@
 #include "utils.hpp"
+#include <sstream>
 
 bool is_num(std::string &str)
 {
@@ -13,4 +14,12 @@ bool is_num(std::string &str)
 			return false;
 	}
 	return true;
+}
+
+std::string	ltos(long num)
+{
+	std::stringstream	stream;
+
+	stream << num;
+	return stream.str();
 }
