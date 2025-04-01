@@ -61,7 +61,7 @@ std::ostream	&operator<<(std::ostream &stream, const Form &form)
 	stream << "Form " << form.getName() << ":\n"
 		<< "Is signed: " << (form.isSigned() ? "yes\n" : "no\n")
 		<< "Sign grade: " << form.getSignGrade() << "\n"
-		<< "Execution grade: " << form.getExecuteGrade() << "\n";
+		<< "Execution grade: " << form.getExecuteGrade();
 	return stream;
 }
 
