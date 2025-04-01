@@ -41,3 +41,4 @@ bin/
 .vscode
 *.log
 *.replace
+.DS_Store
