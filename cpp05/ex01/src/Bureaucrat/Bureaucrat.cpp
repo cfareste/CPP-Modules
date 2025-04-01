@@ -1,4 +1,5 @@
 #include "Bureaucrat.hpp"
+#include <iostream>
 
 Bureaucrat::Bureaucrat() : name("Default")
 {
@@ -40,6 +41,21 @@ void	Bureaucrat::decrementGrade()
 	if (this->grade >= 150) throw Bureaucrat::GradeTooLowException();
 
 	this->grade++;
+}
+
+void	Bureaucrat::signForm(Form &form)
+{
+	try
+	{
+		form.beSigned(*this);
+		std::cout << this->name << " signed " << form.getName() << std::endl;
+	}
+	catch (std::exception e)
+	{
+		std::cout << this->name
+			<< " couldn't sign " << form.getName()
+			<< " because " << e.what() << std::endl;
+	}
 }
 
 Bureaucrat	&Bureaucrat::operator=(const Bureaucrat &bureaucrat)

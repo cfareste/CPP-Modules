@@ -31,12 +31,12 @@ int	Form::isSigned() const
 	return this->is_signed;
 }
 
-const int	Form::getSignGrade() const
+int	Form::getSignGrade() const
 {
 	return this->sign_grade;
 }
 
-const int Form::getExecuteGrade() const
+int Form::getExecuteGrade() const
 {
 	return this->execute_grade;
 }

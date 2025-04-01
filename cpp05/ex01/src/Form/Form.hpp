@@ -4,6 +4,8 @@
 #include <string>
 #include <ostream>
 
+class Bureaucrat;
+
 class Form {
 	private:
 		const std::string	name;
@@ -19,8 +21,8 @@ class Form {
 
 		const std::string	&getName() const;
 		int					isSigned() const;
-		const int			getSignGrade() const;
-		const int			getExecuteGrade() const;
+		int					getSignGrade() const;
+		int					getExecuteGrade() const;
 		void				beSigned(const Bureaucrat &bureaucrat);
 
 		Form	&operator=(const Form &form);
