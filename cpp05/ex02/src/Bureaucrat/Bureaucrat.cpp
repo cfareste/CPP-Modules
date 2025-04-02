@@ -43,7 +43,7 @@ void	Bureaucrat::decrementGrade()
 	this->grade++;
 }
 
-void	Bureaucrat::signForm(Form &form)
+void	Bureaucrat::signForm(AForm &form)
 {
 	try
 	{

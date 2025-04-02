@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Form/Form.hpp"
+#include "AForm/AForm.hpp"
 #include <string>
 #include <ostream>
 
-class Form;
+class AForm;
 
 class Bureaucrat {
 	private:
@@ -22,7 +22,7 @@ class Bureaucrat {
 		void				incrementGrade();
 		void				decrementGrade();
 
-		void	signForm(Form &form);
+		void	signForm(AForm &form);
 
 		Bureaucrat	&operator=(const Bureaucrat &bureaucrat);
 

@@ -33,7 +33,7 @@ INC = -I$(SRC)
 
 FILES = main.cpp \
 		Bureaucrat.cpp \
-		Form.cpp
+		AForm.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
 # ------------------ #
@@ -41,7 +41,7 @@ DEPS = $(OBJS:%.o=%.d)
 # --- # vpath # ---- #
 vpath %.cpp $(SRC):\
 			$(SRC)/Bureaucrat:\
-			$(SRC)/Form
+			$(SRC)/AForm
 # ------------------ #
 
 
