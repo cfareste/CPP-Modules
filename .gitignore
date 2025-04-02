@@ -42,3 +42,4 @@ bin/
 *.log
 *.replace
 .DS_Store
+*_shrubbery
