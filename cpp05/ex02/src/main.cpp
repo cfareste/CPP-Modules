@@ -13,10 +13,9 @@ int	main(void)
 	bc.signForm(scf);
 	bc.signForm(rrf);
 	bc.signForm(ppf);
-
-	scf.execute(bc);
-	rrf.execute(bc);
-	ppf.execute(bc);
+	bc.executeForm(scf);
+	bc.executeForm(rrf);
+	bc.executeForm(ppf);
 
 	return 0;
 }

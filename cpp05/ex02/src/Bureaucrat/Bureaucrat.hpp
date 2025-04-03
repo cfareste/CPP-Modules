@@ -23,6 +23,7 @@ class Bureaucrat {
 		void				decrementGrade();
 
 		void	signForm(AForm &form);
+		void	executeForm(AForm const &form);
 
 		Bureaucrat	&operator=(const Bureaucrat &bureaucrat);
 
