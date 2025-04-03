@@ -5,13 +5,13 @@ ShrubberyCreationForm::ShrubberyCreationForm() : AForm("Default", 1, 1)
 {
 }
 
-ShrubberyCreationForm::ShrubberyCreationForm(const std::string &target) : AForm("Shrubbery Creation", 145, 137)
+ShrubberyCreationForm::ShrubberyCreationForm(const std::string &target) : AForm("Shrubbery Creation Form", 145, 137)
 {
 	this->target = target;
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &scf):
-	AForm("Shrubbery Creation", 145, 137)
+	AForm("Shrubbery Creation Form", 145, 137)
 {
 	this->target = scf.target;
 }
