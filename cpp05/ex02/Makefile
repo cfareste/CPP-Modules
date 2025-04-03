@@ -34,7 +34,8 @@ INC = -I$(SRC)
 FILES = main.cpp \
 		Bureaucrat.cpp \
 		AForm.cpp \
-		ShrubberyCreationForm.cpp
+		ShrubberyCreationForm.cpp \
+		RobotomyRequestForm.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
 # ------------------ #
@@ -43,7 +44,8 @@ DEPS = $(OBJS:%.o=%.d)
 vpath %.cpp $(SRC):\
 			$(SRC)/Bureaucrat:\
 			$(SRC)/AForm:\
-			$(SRC)/AForm/ShrubberyCreationForm
+			$(SRC)/AForm/ShrubberyCreationForm:\
+			$(SRC)/AForm/RobotomyRequestForm
 # ------------------ #
 
 
