@@ -5,7 +5,7 @@
 
 int	main(void)
 {
-	Bureaucrat				bc = Bureaucrat("Chris", 1);
+	Bureaucrat				bc = Bureaucrat("Chris", 72);
 	RobotomyRequestForm		rrf = RobotomyRequestForm("Bush");
 	ShrubberyCreationForm	scf = ShrubberyCreationForm("Home");
 	PresidentialPardonForm	ppf = PresidentialPardonForm("Tube");
@@ -14,6 +14,12 @@ int	main(void)
 	bc.signForm(rrf);
 	bc.signForm(ppf);
 	bc.executeForm(scf);
+	bc.executeForm(rrf);
+	bc.executeForm(ppf);
+
+	bc = Bureaucrat("Chris", 1);
+
+	bc.signForm(ppf);
 	bc.executeForm(rrf);
 	bc.executeForm(ppf);
 
