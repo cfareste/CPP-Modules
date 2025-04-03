@@ -36,8 +36,8 @@ FILES = main.cpp \
 		AForm.cpp \
 		ShrubberyCreationForm.cpp \
 		RobotomyRequestForm.cpp \
-		PresidentialPardonForm.cpp
-
+		PresidentialPardonForm.cpp \
+		Intern.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
 # ------------------ #
@@ -48,7 +48,8 @@ vpath %.cpp $(SRC):\
 			$(SRC)/AForm:\
 			$(SRC)/AForm/ShrubberyCreationForm:\
 			$(SRC)/AForm/RobotomyRequestForm:\
-			$(SRC)/AForm/PresidentialPardonForm
+			$(SRC)/AForm/PresidentialPardonForm:\
+			$(SRC)/Intern:\
 # ------------------ #
 
 
