@@ -26,7 +26,7 @@ void RobotomyRequestForm::execute_concrete_form() const
 		std::cout << "Robotomization failed. Address to your trusted MIT engineer" << std::endl;
 		return ;
 	}
-	std::cout << target << " has been succesfully robotomized. Elon Musk approves" << std::endl;
+	std::cout << this->target << " has been succesfully robotomized. Elon Musk approves" << std::endl;
 }
 
 RobotomyRequestForm	&RobotomyRequestForm::operator=(const RobotomyRequestForm &rqf)
