@@ -23,6 +23,11 @@ class ScalarConverter {
 		static bool			isChar(std::string &input);
 		static bool			isPseudoLiteral(std::string &input);
 		static t_InputTypes	getType(std::string &input);
+		static bool			doesOverflow(std::string &input);
+		static void			convertToChar(std::string &input, t_InputTypes &type);
+		static void			convertToInt(std::string &input, t_InputTypes &type);
+		static void			convertToFloat(std::string &input, t_InputTypes &type);
+		static void			convertToDouble(std::string &input, t_InputTypes &type);
 
 		ScalarConverter	&operator=(const ScalarConverter &sc);
 

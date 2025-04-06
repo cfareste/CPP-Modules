@@ -81,12 +81,81 @@ t_InputTypes	ScalarConverter::getType(std::string &input)
 	return INT;
 }
 
+bool	ScalarConverter::doesOverflow(std::string &input)
+{
+	if (input.length() > 11) return true;
+
+	long long	num = std::atoll(input.c_str());
+	if (num < std::numeric_limits<int>::min()
+		|| num > std::numeric_limits<int>::max())
+		return true;
+	return false;
+}
+
+void	ScalarConverter::convertToChar(std::string &input, t_InputTypes &type)
+{
+	int	realValue = std::atoi(input.c_str());
+
+	std::cout << "char: ";
+	if (type == CHAR)
+		std::cout << "'" << input << "'";
+	else if (type == PSEUDO_LITERAL)
+		std::cout << "impossible";
+	else if (std::isprint(realValue))
+		std::cout << "'" << static_cast<unsigned char>(realValue) << "'";
+	else
+		std::cout << "Non displayable";
+	std::cout << std::endl;
+}
+
+void	ScalarConverter::convertToInt(std::string &input, t_InputTypes &type)
+{
+	std::cout << "int: ";
+	if (ScalarConverter::doesOverflow(input) || type == PSEUDO_LITERAL)
+		std::cout << "impossible";
+	else if (type == CHAR)
+		std::cout << static_cast<int>(input.at(0));
+	else
+		std::cout << std::atoi(input.c_str());
+	std::cout << std::endl;
+}
+
+void	ScalarConverter::convertToFloat(std::string &input, t_InputTypes &type)
+{
+	std::cout.precision(1);
+	std::cout.setf(std::ios::fixed);
+	std::cout << "float: ";
+	if (type == CHAR)
+		std::cout << static_cast<float>(input.at(0));
+	else
+		std::cout << static_cast<float>(std::atof(input.c_str()));
+	std::cout << "f" << std::endl;
+	std::cout.unsetf(std::ios::fixed);
+}
+
+void	ScalarConverter::convertToDouble(std::string &input, t_InputTypes &type)
+{
+	std::cout.precision(1);
+	std::cout.setf(std::ios::fixed);
+	std::cout << "double: ";
+	if (type == CHAR)
+		std::cout << static_cast<double>(input.at(0));
+	else
+		std::cout << static_cast<double>(std::atof(input.c_str()));
+	std::cout << std::endl;
+	std::cout.unsetf(std::ios::fixed);
+}
+
 void	ScalarConverter::convert(std::string input)
 {
 	t_InputTypes	inputType = ScalarConverter::getType(input);
 
 	if (inputType == UNDEFINED) return ScalarConverter::handleUndefinedType(input);
-	std::cout << "Input: " << input << " | Type: " << inputType << std::endl;
+
+	ScalarConverter::convertToChar(input, inputType);
+	ScalarConverter::convertToInt(input, inputType);
+	ScalarConverter::convertToFloat(input, inputType);
+	ScalarConverter::convertToDouble(input, inputType);
 }
 
 ScalarConverter	&ScalarConverter::operator=(const ScalarConverter &sc)

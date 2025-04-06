@@ -31,5 +31,9 @@ int	main(void)
 	ScalarConverter::convert("-inf");
 	ScalarConverter::convert("+inff");
 	ScalarConverter::convert("-inff");
+	ScalarConverter::convert("2147483647");
+	ScalarConverter::convert("-2147483648");
+	ScalarConverter::convert("2147483650");
+	ScalarConverter::convert("-2147483650");
 	return 0;
 }
