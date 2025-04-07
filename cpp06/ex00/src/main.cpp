@@ -1,7 +1,7 @@
 #include "ScalarConverter/ScalarConverter.hpp"
 #include <iostream>
 
-int	main(void)
+void	basic_tests()
 {
 	ScalarConverter::convert("a");
 	ScalarConverter::convert("aa");
@@ -35,5 +35,12 @@ int	main(void)
 	ScalarConverter::convert("-2147483648");
 	ScalarConverter::convert("2147483650");
 	ScalarConverter::convert("-2147483650");
+}
+
+int	main(int argc, char **argv)
+{
+	if (argc == 1)
+		return (basic_tests(), 0);
+	ScalarConverter::convert(argv[1]);
 	return 0;
 }

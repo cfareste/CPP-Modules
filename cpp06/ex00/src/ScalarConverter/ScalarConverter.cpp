@@ -103,7 +103,7 @@ void	ScalarConverter::convertToChar(std::string &input, t_InputTypes &type)
 		std::cout << "'" << input << "'";
 	else if (type == PSEUDO_LITERAL)
 		std::cout << "impossible";
-	else if (std::isprint(realValue))
+	else if (realValue >= 0 && realValue <= 255 && std::isprint(realValue))
 		std::cout << "'" << static_cast<unsigned char>(realValue) << "'";
 	else
 		std::cout << "Non displayable";
