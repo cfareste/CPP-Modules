@@ -1,5 +1,7 @@
 #include "ScalarConverter.hpp"
 #include <iostream>
+#include <cstdlib>
+#include <limits>
 
 ScalarConverter::ScalarConverter()
 {
