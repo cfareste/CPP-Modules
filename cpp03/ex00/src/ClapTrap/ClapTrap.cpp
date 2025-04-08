@@ -22,7 +22,7 @@ ClapTrap::ClapTrap(const ClapTrap &ct)
 	*this = ct;
 }
 
-std::string	&ClapTrap::getName()
+const std::string	&ClapTrap::getName()
 {
 	return this->name;
 }
@@ -52,7 +52,7 @@ void ClapTrap::attack(const std::string &target)
 
 	std::cout << "ClapTrap " << this->name
 		<< " attacks " << target
-		<< " causing " << this->attack_damage << " points of damage!" << std::endl;
+		<< ", causing " << this->attack_damage << " points of damage!" << std::endl;
 	this->energy_points--;
 }
 

@@ -16,7 +16,7 @@ class ClapTrap {
 		ClapTrap(const std::string &name);
 		ClapTrap(const ClapTrap &ct);
 
-		std::string	&getName();
+		const std::string	&getName();
 		int			getHitPoints();
 		int			getEnergyPoints();
 
