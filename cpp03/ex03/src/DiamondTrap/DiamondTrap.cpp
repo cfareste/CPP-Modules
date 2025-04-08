@@ -53,7 +53,7 @@ DiamondTrap	&DiamondTrap::operator=(const DiamondTrap &dt)
 std::ostream	&operator<<(std::ostream &stream, const DiamondTrap &diamond_trap)
 {
 	stream << "DiamondTrap " << diamond_trap.getName()
-		<< " (" << diamond_trap.getClapTrapName() << ") "
+		<< " (" << diamond_trap.getClapTrapName() << ")"
 		<< " (HPs, EPs, AD): " << diamond_trap.getHitPoints() << ", " << diamond_trap.getEnergyPoints()
 		<< ", " << diamond_trap.getAttackDamage();
 	return stream;
