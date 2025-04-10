@@ -25,7 +25,7 @@ CYAN = \033[0;36m
 NAME = a.out
 
 C++ = c++
-FLAGS = -Wall -Wextra -Werror -std=c++98 -g -fsanitize=address -fsanitize=leak -pedantic
+FLAGS = -Wall -Wextra -Werror -std=c++98 -g -fsanitize=address -fsanitize=leak -pedantic #-DDEBUG
 
 SRC = src/
 BIN_DIR = bin/
