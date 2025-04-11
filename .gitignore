@@ -40,6 +40,7 @@ bin/
 
 # Extras
 .vscode
+.idea
 *.log
 *.replace
 .DS_Store
