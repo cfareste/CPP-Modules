@@ -22,7 +22,7 @@ CYAN = \033[0;36m
 
 
 # ---- # Vars # ---- #
-NAME = a.out
+NAME = ex01
 
 C++ = c++
 FLAGS = -Wall -Wextra -Werror -std=c++98 -g -fsanitize=address -pedantic
@@ -31,13 +31,15 @@ SRC = src/
 BIN_DIR = bin/
 INC = -I$(SRC)
 
-FILES = main.cpp
+FILES = main.cpp \
+		Span.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
 # ------------------ #
 
 # --- # vpath # ---- #
-vpath %.cpp $(SRC)
+vpath %.cpp $(SRC):\
+			$(SRC)/Span
 # ------------------ #
 
 
