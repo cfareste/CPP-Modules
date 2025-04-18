@@ -17,8 +17,12 @@ public:
 	int		shortestSpan() const;
 	int		longestSpan() const;
 	void	listNumbers() const;
+	template<typename It>
+	void	fill(It begin, It end);
 
 	Span	&operator=(const Span &other);
 
 	~Span();
 };
+
+#include "Span.tpp"
