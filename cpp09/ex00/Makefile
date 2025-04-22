@@ -31,13 +31,15 @@ SRC = src/
 BIN_DIR = bin/
 INC = -I$(SRC)
 
-FILES = main.cpp
+FILES = main.cpp \
+		BitcoinExchange.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
 # ------------------ #
 
 # --- # vpath # ---- #
-vpath %.cpp $(SRC)
+vpath %.cpp $(SRC):\
+			$(SRC)/BitcoinExchange
 # ------------------ #
 
 
