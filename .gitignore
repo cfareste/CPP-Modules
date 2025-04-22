@@ -36,6 +36,7 @@ tests
 convert
 /cpp08/ex01/ex01
 btc
+RPN
 
 # Binaries
 bin/
