@@ -1,5 +1,8 @@
 #include "Span/Span.hpp"
 #include <iostream>
+#include <climits>
+#include <cstdlib>
+#include <vector>
 #include <list>
 
 #ifndef SPAN_SIZE
