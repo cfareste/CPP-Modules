@@ -1,4 +1,5 @@
 #include "BitcoinExchange/BitcoinExchange.hpp"
+#include <cstdlib>
 #include <iostream>
 
 #define DATABASE_PATH "data.csv"

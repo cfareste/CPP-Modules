@@ -1,5 +1,6 @@
 #include "RPN.hpp"
 #include <iostream>
+#include <algorithm>
 
 const std::string RPN::operands[OPERANDS_AMOUNT] = { "+", "-", "*", "/" };
 

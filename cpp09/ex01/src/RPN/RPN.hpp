@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stack>
+#include <string>
 
 #define OPERANDS_AMOUNT 4
 

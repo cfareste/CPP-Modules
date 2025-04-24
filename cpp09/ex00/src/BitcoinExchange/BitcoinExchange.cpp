@@ -1,6 +1,8 @@
 #include "BitcoinExchange.hpp"
-#include <iostream>
+#include <limits>
+#include <cstdlib>
 #include <sstream>
+#include <iostream>
 
 BitcoinExchange::BitcoinExchange()
 {
