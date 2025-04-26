@@ -19,6 +19,6 @@ public:
 
 	void	sortMergeInsertAlgorithm(int *numbers, int size);
 
-	void	print();
+	void	print(const std::string &title, std::vector<int> &vector);
 
 };
