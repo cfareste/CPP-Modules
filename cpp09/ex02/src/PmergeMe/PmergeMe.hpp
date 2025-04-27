@@ -8,7 +8,7 @@ class PmergeMe
 private:
 	std::vector<int>	vec;
 
-	void	insertMerge(int recursionLevel, int elementsAmount, int lastPairSize);
+	void	insertMerge(int elementsAmount, int lastPairSize);
 	void	sort(int recursionLevel);
 
 public:
@@ -17,7 +17,7 @@ public:
 	PmergeMe	&operator=(const PmergeMe &other);
 	~PmergeMe();
 
-	void	sortMergeInsertAlgorithm(int *numbers, int size);
+	int	sortVectorFordJohnson(std::vector<int> &vector);
 
 	void	print(const std::string &title, std::vector<int> &vector);
 
