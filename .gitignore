@@ -38,6 +38,7 @@ convert
 btc
 /cpp09/ex01/RPN
 /cpp09/ex02/PmergeMe
+/cpp09/ex02/tester/tester
 
 # Binaries
 bin/
