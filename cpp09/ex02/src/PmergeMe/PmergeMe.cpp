@@ -4,6 +4,8 @@
 #include <iterator>
 #include <algorithm>
 
+int	PmergeMe::comparisons_ = 0;
+
 PmergeMe::PmergeMe()
 {
 }
@@ -24,6 +26,12 @@ PmergeMe	&PmergeMe::operator=(const PmergeMe &other)
 
 PmergeMe::~PmergeMe()
 {
+}
+
+static bool	isSmaller(int lval, int rval)
+{
+	PmergeMe::increaseComparisons();
+	return lval < rval;
 }
 
 static int	getJacobsthal(int index)
@@ -120,7 +128,7 @@ void	PmergeMe::insertMerge(int elementsAmount, int lastPairSize)
 			// std::cout << "OFFSET CHAUFLAN: " << ((((*pendIndexIt) * -1) - inserted) * lastPairSize) + lastPairSize - 1 << std::endl;
 			pendIt = pend.begin() + ((((*pendIndexIt) * -1) - inserted) * lastPairSize) + lastPairSize - 1;
 			boundMain = std::find(mainIndexes.begin(), mainIndexes.end(), (*pendIndexIt) * -1);
-			insertionIt = std::upper_bound(pairBounds.begin(), pairBounds.begin() + (boundMain - mainIndexes.begin()), *pendIt);
+			insertionIt = std::upper_bound(pairBounds.begin(), pairBounds.begin() + (boundMain - mainIndexes.begin()), *pendIt, isSmaller);
 			// std::cout << "Bound main in mainIndexes: " << *(pairBounds.begin() + (boundMain - mainIndexes.begin())) << std::endl;
 			// std::cout << "Pend ite: " << *pendIt << " | Bound Main: " << *boundMain << " | Insertion: " << *insertionIt << std::endl;
 			// this->print("Bounds", pairBounds);
@@ -169,7 +177,7 @@ void	PmergeMe::sort(int recursionLevel)
 	for (std::size_t i = lastPairSize - 1; i < legalElements; i += elementsAmount)
 	{
 		// std::cout << "Iteration: " << i << std::endl;
-		if (this->vec.at(i) < this->vec.at(i + lastPairSize))
+		if (isSmaller(this->vec.at(i), this->vec.at(i + lastPairSize)))
 			continue ;
 
 		for (int j = lastPairSize - 1; j >= 0; j--)
@@ -185,14 +193,20 @@ void	PmergeMe::sort(int recursionLevel)
 	this->insertMerge(elementsAmount, lastPairSize);
 }
 
+void	PmergeMe::increaseComparisons()
+{
+	PmergeMe::comparisons_++;
+}
+
 int	PmergeMe::sortVectorFordJohnson(std::vector<int> &vector)
 {
+	PmergeMe::comparisons_ = 0;
 	this->vec = vector;
 	this->print("Main vec", this->vec);
 	this->sort(1);
 	this->print("Sorted main vec", this->vec);
 	vector = this->vec;
-	return 0;
+	return PmergeMe::comparisons_;
 }
 
 void	PmergeMe::print(const std::string &title, std::vector<int> &vector)
