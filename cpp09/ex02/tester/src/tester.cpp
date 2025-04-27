@@ -2,11 +2,13 @@
 #include <cmath>
 #include <vector>
 #include <cstdlib>
+#include <fcntl.h>
+#include <unistd.h>
 #include <iostream>
 
 #define TOO_MUCH_COMPARISONS 2
 #define VECTOR_NOT_SORTED 3
-#define SIZES_MISMATCH 4
+#define SIZES_MISMATCH 5
 
 static bool	isSorted(std::vector<int>	&vector)
 {
@@ -21,13 +23,14 @@ static bool	isSorted(std::vector<int>	&vector)
 	return true;
 }
 
-static std::vector<int>	getVector(int argc, char **argv)
+static std::vector<int>	getVector(int size)
 {
 	std::vector<int>	vector;
 
-	for (int i = 1; i < argc; i++)
+	for (int i = 0; i < size; i++)
 	{
-		vector.push_back(std::atof(argv[i]));
+		int	num = (rand() / static_cast<float>(RAND_MAX)) * 100000;
+		vector.push_back(num);
 	}
 
 	return vector;
@@ -43,25 +46,46 @@ static int	getMaxComparisons(int n)
 	return sum;
 }
 
-int	main(int argc, char **argv)
+int	main()
 {
 	try
 	{
-		PmergeMe	pmerge;
+		PmergeMe			pmerge;
+		std::vector<int>	vector;
+		std::vector<int>	copyVector;
 
-		std::vector<int>	vector = getVector(argc, argv);
-		int	previousSize = vector.size();
-		int	maxComparisons = getMaxComparisons(vector.size());
-		int	comparisons = pmerge.sortVectorFordJohnson(vector);
+		int	coutCopy = dup(STDOUT_FILENO);
+		int	devNull = open("/dev/null", O_WRONLY);
 
-		std::cout << "Comparisons: " << comparisons << std::endl;
+		dup2(devNull, STDOUT_FILENO);
 
-		if (comparisons > maxComparisons)
-			return TOO_MUCH_COMPARISONS;
-		if (!isSorted(vector))
-			return VECTOR_NOT_SORTED;
-		if (previousSize != static_cast<int>(vector.size()))
-			return SIZES_MISMATCH;
+		for (int i = 2; i <= 3000; i++)
+		{
+			srand(time(NULL));
+			std::cerr << "Testing with " << i << " nums..." << std::endl;
+			for (int j = 0; j < 1000; j++)
+			{
+				vector = getVector(i);
+				copyVector = vector;
+				int	previousSize = vector.size();
+				int	maxComparisons = getMaxComparisons(vector.size());
+				int	comparisons = pmerge.sortVectorFordJohnson(vector);
+
+				if (comparisons > maxComparisons
+					|| !isSorted(vector)
+					|| previousSize != static_cast<int>(vector.size()))
+				{
+					dup2(coutCopy, STDOUT_FILENO);
+					std::cout << "Error" << std::endl;
+					pmerge.print("Vector", copyVector);
+					std::cout << "Is sorted: " << (isSorted(vector) ? "yes" : "no") << std::endl;
+					std::cout << "Comparisons (MAX = " << maxComparisons << "): " << comparisons << std::endl;
+					dup2(devNull, STDOUT_FILENO);
+				}
+			}
+		}
+		close(coutCopy);
+		close(devNull);
 		return EXIT_SUCCESS;
 	}
 	catch(const std::exception &e)
