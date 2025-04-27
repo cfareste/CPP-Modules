@@ -32,7 +32,7 @@ PROGRAM_SRC = ../src/
 BIN_DIR = bin/
 INC = -I$(SRC) -I$(PROGRAM_SRC)
 
-FILES = main.cpp \
+FILES = tester.cpp \
 		PmergeMe.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
