@@ -130,7 +130,7 @@ void	PmergeMe::insertMerge(int recursionLevel, int elementsAmount, int lastPairS
 			// std::cout << "Hola?: " << (insertionIt - pairBounds.begin()) << std::endl;
 			int	offset = (insertionIt - pairBounds.begin()) * lastPairSize;
 			std::cout << "Offset: " << offset << std::endl;
-			std::cout << "Pair limits: " << *(this->vec.begin() + offset) << std::flush << " | " << *(this->vec.begin() + offset + lastPairSize) << std::endl;
+			// std::cout << "Pair limits: " << *(this->vec.begin() + offset) << std::flush << " | " << *(this->vec.begin() + offset + lastPairSize) << std::endl;
 			this->vec.insert(this->vec.begin() + offset, pendIt - lastPairSize + 1, pendIt + 1);
 			this->print("PEEEEEEEENED", pend);
 			if (pend.end() == pendIt + 1)
@@ -160,7 +160,7 @@ void	PmergeMe::sort(int recursionLevel)
 {
 	std::cout << "Rec: " << recursionLevel << std::endl;
 	std::size_t	elementsAmount = 2 << (recursionLevel - 1);
-	if (this->vec.size() <= elementsAmount)
+	if (this->vec.size() < elementsAmount)
 		return ;
 
 	std::size_t	lastPairSize = elementsAmount >> 1;
