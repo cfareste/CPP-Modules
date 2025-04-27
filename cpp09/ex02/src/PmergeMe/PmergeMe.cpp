@@ -121,8 +121,8 @@ void	PmergeMe::insertMerge(int recursionLevel, int elementsAmount, int lastPairS
 			pendIt = pend.begin() + ((((*pendIndexIt) * -1) - inserted) * lastPairSize) + lastPairSize - 1;
 			boundMain = std::find(mainIndexes.begin(), mainIndexes.end(), (*pendIndexIt) * -1);
 			insertionIt = std::upper_bound(pairBounds.begin(), pairBounds.begin() + (boundMain - mainIndexes.begin()), *pendIt);
-			std::cout << "Bound main in mainIndexes: " << *(pairBounds.begin() + (boundMain - mainIndexes.begin())) << std::endl;
-			std::cout << "Pend ite: " << *pendIt << " | Bound Main: " << *boundMain << " | Insertion: " << *insertionIt << std::endl;
+			// std::cout << "Bound main in mainIndexes: " << *(pairBounds.begin() + (boundMain - mainIndexes.begin())) << std::endl;
+			// std::cout << "Pend ite: " << *pendIt << " | Bound Main: " << *boundMain << " | Insertion: " << *insertionIt << std::endl;
 			this->print("Bounds", pairBounds);
 			pairBounds.insert(insertionIt, *pendIt);
 			insertionIt = std::find(pairBounds.begin(), pairBounds.end(), *pendIt);
@@ -164,7 +164,9 @@ void	PmergeMe::sort(int recursionLevel)
 		return ;
 
 	std::size_t	lastPairSize = elementsAmount >> 1;
-	for (std::size_t i = lastPairSize - 1; this->vec.size() - i + 1 >= elementsAmount; i += elementsAmount)
+	std::size_t	legalElements = (this->vec.size() / elementsAmount) * elementsAmount;
+	std::cout << "Legal elements sorting: " << legalElements << std::endl;
+	for (std::size_t i = lastPairSize - 1; i < legalElements; i += elementsAmount)
 	{
 		std::cout << "Iteration: " << i << std::endl;
 		if (this->vec.at(i) < this->vec.at(i + lastPairSize))
@@ -193,7 +195,7 @@ void	PmergeMe::sortMergeInsertAlgorithm(int *numbers, int size)
 
 void	PmergeMe::print(const std::string &title, std::vector<int> &vector)
 {
-	std::cout << title << ": ";
+	std::cout << title << " (" << vector.size() << "): ";
 	for (std::vector<int>::iterator it = vector.begin(); it != vector.end(); ++it)
 	{
 		std::cout << *it << " ";
