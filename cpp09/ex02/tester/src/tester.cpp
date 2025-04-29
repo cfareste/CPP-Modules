@@ -6,6 +6,14 @@
 #include <iostream>
 #include <streambuf>
 
+#ifndef MAX_SIZE
+# define MAX_SIZE 3000
+#endif
+
+#ifndef RANGE_TESTS_AMOUNT
+# define RANGE_TESTS_AMOUNT 1000
+#endif
+
 static std::vector<int>	getVector(int size)
 {
 	std::vector<int>	vector;
@@ -73,7 +81,7 @@ static void	checkResults(std::vector<int> &vector, std::vector<int> &initialVect
 
 static void	executeRangeTests(int rangeSize)
 {
-	for (int j = 0; j < 1000; j++)
+	for (int j = 0; j < RANGE_TESTS_AMOUNT; j++)
 	{
 		std::vector<int>	vector = getVector(rangeSize);
 		std::vector<int>	initialVector = vector;
@@ -89,7 +97,7 @@ int	main()
 
 	try
 	{
-		for (int i = 2; i <= 3000; i++)
+		for (int i = 1; i <= MAX_SIZE; i++)
 		{
 			std::cout << "Testing with " << i << " numbers..." << std::endl;
 
