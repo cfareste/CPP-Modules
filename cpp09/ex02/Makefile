@@ -25,16 +25,19 @@ CYAN = \033[0;36m
 NAME = PmergeMe
 
 C++ = c++
-FLAGS = -Wall -Wextra -Werror -std=c++98 -g -fsanitize=address -pedantic
+FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic -g -fsanitize=address
 
 SRC = src/
 BIN_DIR = bin/
 INC = -I$(SRC)
+TESTER=tester/
 
 FILES = main.cpp \
 		PmergeMe.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
+
+TESTER_BINARY=./tester
 # ------------------ #
 
 # --- # vpath # ---- #
@@ -67,6 +70,13 @@ fclean: clean
 	@printf "$(RED)Executable $(WHITE)$(NAME)$(RED) removed.$(RESET)\n"
 
 re: fclean all
+
+test:
+	@cd $(TESTER) && $(MAKE) && $(TESTER_BINARY)
+
+testfcl:
+	@cd $(TESTER) && $(MAKE) fclean
+
 # ------------------ #
 
 # --- # Extras # --- #

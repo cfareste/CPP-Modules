@@ -48,6 +48,7 @@ static int	getMaxComparisons(int n)
 
 int	main()
 {
+	srand(time(NULL));
 	try
 	{
 		PmergeMe			pmerge;
@@ -61,7 +62,6 @@ int	main()
 
 		for (int i = 2; i <= 3000; i++)
 		{
-			srand(time(NULL));
 			std::cerr << "Testing with " << i << " nums..." << std::endl;
 			for (int j = 0; j < 1000; j++)
 			{
