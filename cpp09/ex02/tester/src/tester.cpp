@@ -6,19 +6,6 @@
 #include <iostream>
 #include <streambuf>
 
-static bool	isSorted(std::vector<int> &vector)
-{
-	if (vector.empty())
-		return true;
-
-	for (std::vector<int>::iterator it = vector.begin() + 1; it != vector.end(); ++it)
-	{
-		if (*(it - 1) > *it)
-			return false;
-	}
-	return true;
-}
-
 static std::vector<int>	getVector(int size)
 {
 	std::vector<int>	vector;
@@ -30,6 +17,19 @@ static std::vector<int>	getVector(int size)
 	}
 
 	return vector;
+}
+
+static bool	isSorted(std::vector<int> &vector)
+{
+	if (vector.empty())
+		return true;
+
+	for (std::vector<int>::iterator it = vector.begin() + 1; it != vector.end(); ++it)
+	{
+		if (*(it - 1) > *it)
+			return false;
+	}
+	return true;
 }
 
 static int	getMaxComparisons(int n)
@@ -71,6 +71,18 @@ static void	checkResults(std::vector<int> &vector, std::vector<int> &initialVect
 	std::cout << "-----" << std::endl;
 }
 
+static void	executeRangeTests(int rangeSize)
+{
+	for (int j = 0; j < 1000; j++)
+	{
+		std::vector<int>	vector = getVector(rangeSize);
+		std::vector<int>	initialVector = vector;
+
+		int	comparisons = executeSortingAlgorithm(vector);
+		checkResults(vector, initialVector, comparisons);
+	}
+}
+
 int	main()
 {
 	srand(time(NULL));
@@ -81,14 +93,7 @@ int	main()
 		{
 			std::cout << "Testing with " << i << " numbers..." << std::endl;
 
-			for (int j = 0; j < 1000; j++)
-			{
-				std::vector<int>	vector = getVector(i);
-				std::vector<int>	initialVector = vector;
-
-				int	comparisons = executeSortingAlgorithm(vector);
-				checkResults(vector, initialVector, comparisons);
-			}
+			executeRangeTests(i);
 		}
 		return EXIT_SUCCESS;
 	}
