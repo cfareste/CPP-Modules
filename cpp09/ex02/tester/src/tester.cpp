@@ -4,12 +4,9 @@
 #include <cstdlib>
 #include <sstream>
 #include <iostream>
+#include <streambuf>
 
-#define TOO_MUCH_COMPARISONS 2
-#define VECTOR_NOT_SORTED 3
-#define SIZES_MISMATCH 5
-
-static bool	isSorted(std::vector<int>	&vector)
+static bool	isSorted(std::vector<int> &vector)
 {
 	if (vector.empty())
 		return true;
@@ -45,6 +42,19 @@ static int	getMaxComparisons(int n)
 	return sum;
 }
 
+static int	executeSortingAlgorithm(std::vector<int> &vector)
+{
+	PmergeMe			pmerge;
+	std::streambuf		*coutCopy = std::cout.rdbuf();
+	std::ostringstream	tempBuffer;
+
+	std::cout.rdbuf(tempBuffer.rdbuf());
+	int	comparisons = pmerge.sortVectorFordJohnson(vector);
+	std::cout.rdbuf(coutCopy);
+
+	return comparisons;
+}
+
 static void	checkResults(std::vector<int> &vector, std::vector<int> &initialVector, int comparisons)
 {
 	int	maxComparisons = getMaxComparisons(initialVector.size());
@@ -53,7 +63,7 @@ static void	checkResults(std::vector<int> &vector, std::vector<int> &initialVect
 		return ;
 
 	std::cout << "-----" << std::endl;
-	std::cout << "Error" << std::endl;
+	std::cout << "Error:" << std::endl;
 	PmergeMe().print("Initial vector", initialVector);
 	PmergeMe().print("Sorted vector", vector);
 	std::cout << "Is sorted: " << (isSorted(vector) ? "yes" : "no") << std::endl;
@@ -64,10 +74,6 @@ static void	checkResults(std::vector<int> &vector, std::vector<int> &initialVect
 int	main()
 {
 	srand(time(NULL));
-
-	PmergeMe			pmerge;
-	std::streambuf		*coutCopy = std::cout.rdbuf();
-	std::ostringstream	tempBuffer;
 
 	try
 	{
@@ -80,21 +86,15 @@ int	main()
 				std::vector<int>	vector = getVector(i);
 				std::vector<int>	initialVector = vector;
 
-				std::cout.rdbuf(tempBuffer.rdbuf());
-				int	comparisons = pmerge.sortVectorFordJohnson(vector);
-				std::cout.rdbuf(coutCopy);
-
+				int	comparisons = executeSortingAlgorithm(vector);
 				checkResults(vector, initialVector, comparisons);
-
-				tempBuffer.str("");
-				tempBuffer.clear();
 			}
 		}
 		return EXIT_SUCCESS;
 	}
 	catch(const std::exception &e)
 	{
-		std::cerr << e.what() << std::endl;
+		std::cerr << "Fatal error: " << e.what() << std::endl;
 	}
 	return EXIT_FAILURE;
 }
