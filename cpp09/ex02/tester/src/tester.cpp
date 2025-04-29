@@ -2,8 +2,7 @@
 #include <cmath>
 #include <vector>
 #include <cstdlib>
-#include <fcntl.h>
-#include <unistd.h>
+#include <sstream>
 #include <iostream>
 
 #define TOO_MUCH_COMPARISONS 2
@@ -46,46 +45,51 @@ static int	getMaxComparisons(int n)
 	return sum;
 }
 
+static void	checkResults(std::vector<int> &vector, std::vector<int> &initialVector, int comparisons)
+{
+	int	maxComparisons = getMaxComparisons(initialVector.size());
+
+	if (comparisons <= maxComparisons && isSorted(vector) && initialVector.size() == vector.size())
+		return ;
+
+	std::cout << "-----" << std::endl;
+	std::cout << "Error" << std::endl;
+	PmergeMe().print("Initial vector", initialVector);
+	PmergeMe().print("Sorted vector", vector);
+	std::cout << "Is sorted: " << (isSorted(vector) ? "yes" : "no") << std::endl;
+	std::cout << "Comparisons (MAX = " << maxComparisons << "): " << comparisons << std::endl;
+	std::cout << "-----" << std::endl;
+}
+
 int	main()
 {
 	srand(time(NULL));
+
+	PmergeMe			pmerge;
+	std::streambuf		*coutCopy = std::cout.rdbuf();
+	std::ostringstream	tempBuffer;
+
 	try
 	{
-		PmergeMe			pmerge;
-		std::vector<int>	vector;
-		std::vector<int>	copyVector;
-
-		int	coutCopy = dup(STDOUT_FILENO);
-		int	devNull = open("/dev/null", O_WRONLY);
-
-		dup2(devNull, STDOUT_FILENO);
-
 		for (int i = 2; i <= 3000; i++)
 		{
-			std::cerr << "Testing with " << i << " nums..." << std::endl;
+			std::cout << "Testing with " << i << " numbers..." << std::endl;
+
 			for (int j = 0; j < 1000; j++)
 			{
-				vector = getVector(i);
-				copyVector = vector;
-				int	previousSize = vector.size();
-				int	maxComparisons = getMaxComparisons(vector.size());
-				int	comparisons = pmerge.sortVectorFordJohnson(vector);
+				std::vector<int>	vector = getVector(i);
+				std::vector<int>	initialVector = vector;
 
-				if (comparisons > maxComparisons
-					|| !isSorted(vector)
-					|| previousSize != static_cast<int>(vector.size()))
-				{
-					dup2(coutCopy, STDOUT_FILENO);
-					std::cout << "Error" << std::endl;
-					pmerge.print("Vector", copyVector);
-					std::cout << "Is sorted: " << (isSorted(vector) ? "yes" : "no") << std::endl;
-					std::cout << "Comparisons (MAX = " << maxComparisons << "): " << comparisons << std::endl;
-					dup2(devNull, STDOUT_FILENO);
-				}
+				std::cout.rdbuf(tempBuffer.rdbuf());
+				int	comparisons = pmerge.sortVectorFordJohnson(vector);
+				std::cout.rdbuf(coutCopy);
+
+				checkResults(vector, initialVector, comparisons);
+
+				tempBuffer.str("");
+				tempBuffer.clear();
 			}
 		}
-		close(coutCopy);
-		close(devNull);
 		return EXIT_SUCCESS;
 	}
 	catch(const std::exception &e)
