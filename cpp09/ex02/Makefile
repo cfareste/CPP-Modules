@@ -38,6 +38,7 @@ OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
 
 TESTER_BINARY=./tester
+TEST_LOG_FILE=tests.log
 # ------------------ #
 
 # --- # vpath # ---- #
@@ -74,6 +75,9 @@ re: fclean all
 test:
 	@cd $(TESTER) && $(MAKE) && $(TESTER_BINARY)
 
+testlog:
+	@cd $(TESTER) && $(MAKE) && $(TESTER_BINARY) > $(TEST_LOG_FILE)
+
 testfcl:
 	@cd $(TESTER) && $(MAKE) fclean
 
@@ -85,7 +89,10 @@ testfcl:
 .PHONY: all \
 		clean \
 		fclean \
-		re
+		re \
+		test \
+		testlog \
+		testfcl
 
 .SILENT:
 # ------------------ #

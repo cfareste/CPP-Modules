@@ -25,7 +25,7 @@ CYAN = \033[0;36m
 NAME = tester
 
 C++ = c++
-FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic -g -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic -O3 #-g -fsanitize=address
 
 SRC = src/
 PROGRAM_SRC = ../src/
