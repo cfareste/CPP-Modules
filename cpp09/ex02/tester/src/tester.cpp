@@ -1,10 +1,9 @@
 #include "PmergeMe/PmergeMe.hpp"
 #include <cmath>
-#include <vector>
-#include <cstdlib>
+#include <cstdio>
 #include <sstream>
 #include <iostream>
-#include <streambuf>
+#include <unistd.h>
 
 #ifndef MAX_SIZE
 # define MAX_SIZE 3000
@@ -13,6 +12,18 @@
 #ifndef RANGE_TESTS_AMOUNT
 # define RANGE_TESTS_AMOUNT 1000
 #endif
+
+#define GET_COLOR(color) (isatty(fileno(stdout)) ? color : "")
+
+#define RESET		GET_COLOR("\033[0m")
+#define RED			GET_COLOR("\033[0;31m")
+#define RED_BOLD	GET_COLOR("\033[1;31m")
+#define GREEN		GET_COLOR("\033[1;32m")
+#define YELLOW		GET_COLOR("\033[0;33m")
+#define PINK		GET_COLOR("\033[0;35m")
+#define CYAN		GET_COLOR("\033[0;36m")
+#define WHITE		GET_COLOR("\033[0;39m")
+#define BOLDWHITE	GET_COLOR("\033[1;39m")
 
 static std::vector<int>	getVector(int size)
 {
@@ -73,21 +84,43 @@ static bool	checkResults(std::vector<int> &vector, std::vector<int> &initialVect
 	if (comparisons <= maxComparisons && isSorted(vector) && initialVector.size() == vector.size())
 		return false;
 
-	std::cout << "-----" << std::endl;
+	std::cout << RED << "-----" << std::endl;
 	std::cout << "Error:" << std::endl;
 	PmergeMe().print("Initial vector", initialVector);
 	PmergeMe().print("Sorted vector", vector);
 	std::cout << "Is sorted: " << (isSorted(vector) ? "yes" : "no") << std::endl;
 	std::cout << "Comparisons (MAX = " << maxComparisons << "): " << comparisons << std::endl;
-	std::cout << "-----" << std::endl;
+	std::cout << "-----" << RESET << std::endl;
 	return true;
+}
+
+static void printLogMessage(bool result, int rangeSize, double averageComparisons, double averageTime)
+{
+	int maxComparisons = getMaxComparisons(rangeSize);
+
+	std::cout.precision(2);
+	std::cout.setf(std::ios::fixed);
+
+	std::cout << CYAN << "Tested " << WHITE << rangeSize << CYAN << " random numbers "
+			<< WHITE << RANGE_TESTS_AMOUNT << CYAN << " times: "
+			<< (!result ? (std::string(GREEN) + "OK") : (std::string(RED_BOLD) + "KO")) << RESET
+			<< " | " << YELLOW << "Avg. comparisons: " << RESET
+			<< static_cast<int>(averageComparisons)
+			<< " / " << maxComparisons << " max"
+			<< " (" << YELLOW << averageComparisons / static_cast<double>(maxComparisons) * 100.0f << "%" << RESET << ")";
+
+	std::cout.precision(5);
+	std::cout << " | " << PINK << "Avg. time: " << RESET
+			<< averageTime * 1000 << " ms" << std::endl;
+
+	std::cout.clear();
 }
 
 static void	executeRangeTests(int rangeSize)
 {
-	int		totalComparisons = 0;
 	int		result = 0;
-	double	totalTime = 0;
+	double	averageTime = 0;
+	double	averageComparisons = 0;
 
 	for (int j = 0; j < RANGE_TESTS_AMOUNT; j++)
 	{
@@ -96,18 +129,14 @@ static void	executeRangeTests(int rangeSize)
 
 		double	time = 0;
 		int		comparisons = executeSortingAlgorithm(vector, time);
-		totalComparisons += comparisons;
-		totalTime += time;
+		averageTime += time;
+		averageComparisons += comparisons;
 		result |= checkResults(vector, initialVector, comparisons);
 	}
 
-	std::cout.precision(5);
-	std::cout.setf(std::ios::fixed);
-	std::cout << "Tested " << rangeSize << " random numbers " << RANGE_TESTS_AMOUNT << " times: " << (!result ? "OK" : "KO")
-		<< " | Avg. comparisons: " << totalComparisons / RANGE_TESTS_AMOUNT
-		<< " / " << getMaxComparisons(rangeSize)
-		<< " | Avg. time: " << totalTime / static_cast<double>(RANGE_TESTS_AMOUNT) * 1000 << " ms" << std::endl;
-	std::cout.clear();
+	averageTime /= static_cast<double>(RANGE_TESTS_AMOUNT);
+	averageComparisons /= static_cast<double>(RANGE_TESTS_AMOUNT);
+	printLogMessage(result, rangeSize, averageComparisons, averageTime);
 }
 
 int	main()
