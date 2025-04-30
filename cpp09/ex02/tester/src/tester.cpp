@@ -50,25 +50,28 @@ static int	getMaxComparisons(int n)
 	return sum;
 }
 
-static int	executeSortingAlgorithm(std::vector<int> &vector)
+static int	executeSortingAlgorithm(std::vector<int> &vector, double &elapsedTime)
 {
 	PmergeMe			pmerge;
 	std::streambuf		*coutCopy = std::cout.rdbuf();
 	std::ostringstream	tempBuffer;
 
 	std::cout.rdbuf(tempBuffer.rdbuf());
+	clock_t	start = clock();
 	int	comparisons = pmerge.sortVectorFordJohnson(vector);
+	clock_t	finish = clock();
+	elapsedTime = (finish - start) / static_cast<double>(CLOCKS_PER_SEC);
 	std::cout.rdbuf(coutCopy);
 
 	return comparisons;
 }
 
-static void	checkResults(std::vector<int> &vector, std::vector<int> &initialVector, int comparisons)
+static bool	checkResults(std::vector<int> &vector, std::vector<int> &initialVector, int comparisons)
 {
 	int	maxComparisons = getMaxComparisons(initialVector.size());
 
 	if (comparisons <= maxComparisons && isSorted(vector) && initialVector.size() == vector.size())
-		return ;
+		return false;
 
 	std::cout << "-----" << std::endl;
 	std::cout << "Error:" << std::endl;
@@ -77,18 +80,34 @@ static void	checkResults(std::vector<int> &vector, std::vector<int> &initialVect
 	std::cout << "Is sorted: " << (isSorted(vector) ? "yes" : "no") << std::endl;
 	std::cout << "Comparisons (MAX = " << maxComparisons << "): " << comparisons << std::endl;
 	std::cout << "-----" << std::endl;
+	return true;
 }
 
 static void	executeRangeTests(int rangeSize)
 {
+	int		totalComparisons = 0;
+	int		result = 0;
+	double	totalTime = 0;
+
 	for (int j = 0; j < RANGE_TESTS_AMOUNT; j++)
 	{
 		std::vector<int>	vector = getVector(rangeSize);
 		std::vector<int>	initialVector = vector;
 
-		int	comparisons = executeSortingAlgorithm(vector);
-		checkResults(vector, initialVector, comparisons);
+		double	time = 0;
+		int		comparisons = executeSortingAlgorithm(vector, time);
+		totalComparisons += comparisons;
+		totalTime += time;
+		result |= checkResults(vector, initialVector, comparisons);
 	}
+
+	std::cout.precision(5);
+	std::cout.setf(std::ios::fixed);
+	std::cout << "Tested " << rangeSize << " random numbers " << RANGE_TESTS_AMOUNT << " times: " << (!result ? "OK" : "KO")
+		<< " | Avg. comparisons: " << totalComparisons / RANGE_TESTS_AMOUNT
+		<< " / " << getMaxComparisons(rangeSize)
+		<< " | Avg. time: " << totalTime / static_cast<double>(RANGE_TESTS_AMOUNT) * 1000 << " ms" << std::endl;
+	std::cout.clear();
 }
 
 int	main()
@@ -98,11 +117,8 @@ int	main()
 	try
 	{
 		for (int i = 1; i <= MAX_SIZE; i++)
-		{
-			std::cout << "Testing with " << i << " numbers..." << std::endl;
-
 			executeRangeTests(i);
-		}
+
 		return EXIT_SUCCESS;
 	}
 	catch(const std::exception &e)
