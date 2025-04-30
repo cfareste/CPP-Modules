@@ -1,7 +1,5 @@
 #include "PmergeMe.hpp"
-#include <cmath>
 #include <iostream>
-#include <iterator>
 #include <algorithm>
 
 int	PmergeMe::comparisons_ = 0;
