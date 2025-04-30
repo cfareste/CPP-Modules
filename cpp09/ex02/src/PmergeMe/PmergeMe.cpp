@@ -65,20 +65,28 @@ void	PmergeMe::insertMerge(int elementsAmount, int lastPairSize)
 	// std::cout << "Elements: " << elementsAmount << " | Size: " << this->vec.size() << std::endl;
 	// std::cout << "Legals: " << legalElements << " | Rec: " << recursionLevel << std::endl;
 
+	// clock_t start_vec2 = clock();
 	for (int i = elementsAmount; i < legalElements; i += lastPairSize)
 	{
 		// std::cout << "Value at " << i << ": " << this->vec.at(i) << std::endl;
-		for (int j = 0; i < legalElements && j < lastPairSize; j++)
-		{
+		pend.insert(pend.end(), this->vec.begin() + i, this->vec.begin() + i + lastPairSize);
+		this->vec.erase(this->vec.begin() + i, this->vec.begin() + i + lastPairSize);
+		legalElements -= lastPairSize;
+		// for (int j = 0; i < legalElements && j < lastPairSize; j++)
+		// {
 			// std::cout << "Iteration: i: " << i << " | j: " << j << std::endl;
-			pend.push_back(this->vec.at(i));
-			this->vec.erase(this->vec.begin() + i);
-			legalElements--;
-		}
+		// 	pend.push_back(this->vec.at(i));
+		// 	this->vec.erase(this->vec.begin() + i);
+		// 	legalElements--;
+		// }
 		// this->print("Main", this->vec);
 		// this->print("Pend", pend);
 		// std::cout << "New value at " << i << ": " << std::flush << this->vec.at(i) << std::endl;
 	}
+   	// clock_t end_vec2 = clock();
+    // double time_elapsed_vec2 = static_cast<double>(end_vec2 - start_vec2) / CLOCKS_PER_SEC;
+	// std::cout << "TIME IN CREATE PEND: " << time_elapsed_vec2 << std::endl;
+
 
 	// this->print("Main vec", this->vec);
 	// this->print("Pend vec", pend);
@@ -132,11 +140,11 @@ void	PmergeMe::insertMerge(int elementsAmount, int lastPairSize)
 			// std::cout << "Bound main in mainIndexes: " << *(pairBounds.begin() + (boundMain - mainIndexes.begin())) << std::endl;
 			// std::cout << "Pend ite: " << *pendIt << " | Bound Main: " << *boundMain << " | Insertion: " << *insertionIt << std::endl;
 			// this->print("Bounds", pairBounds);
+			int	offset = (insertionIt - pairBounds.begin()) * lastPairSize;
 			pairBounds.insert(insertionIt, *pendIt);
-			insertionIt = std::find(pairBounds.begin(), pairBounds.end(), *pendIt);
+			// insertionIt = std::find(pairBounds.begin(), pairBounds.end(), *pendIt);
 			// this->print("Bounds", pairBounds);
 			// std::cout << "Hola?: " << (insertionIt - pairBounds.begin()) << std::endl;
-			int	offset = (insertionIt - pairBounds.begin()) * lastPairSize;
 			// std::cout << "Offset: " << offset << std::endl;
 			// std::cout << "Pair limits: " << *(this->vec.begin() + offset) << std::flush << " | " << *(this->vec.begin() + offset + lastPairSize) << std::endl;
 			this->vec.insert(this->vec.begin() + offset, pendIt - lastPairSize + 1, pendIt + 1);
@@ -144,9 +152,9 @@ void	PmergeMe::insertMerge(int elementsAmount, int lastPairSize)
 			// if (pend.end() == pendIt + 1)
 			// 	std::cout << "SAME" << std::endl;
 			// std::cout << "First: " << *(pendIt - lastPairSize + 1) << std::flush << " | Last: " << *(pendIt) << std::endl;
-			pend.erase(pendIt - lastPairSize + 1, pendIt + 1);
 			mainIndexes.insert(mainIndexes.begin() + (offset / lastPairSize), *pendIndexIt);
-			pendIndexes.erase((pendIndexIt + 1).base());
+			// pend.erase(pendIt - lastPairSize + 1, pendIt + 1);
+			// pendIndexes.erase((pendIndexIt + 1).base());
 			// std::cout << "---" << std::endl;
 			// this->print("Main vector", this->vec);
 			// this->print("Pend vector", pend);
@@ -157,9 +165,12 @@ void	PmergeMe::insertMerge(int elementsAmount, int lastPairSize)
 			// std::cout << "---" << std::endl;
 		}
 		inserted += counter;
+		pend.erase(pend.begin(), pend.begin() + (lastPairSize * counter));
+		pendIndexes.erase(pendIndexes.begin(), pendIndexes.begin() + counter);
 		// std::cout << "Exiting jacobsthal" << std::endl;
 		jacobsthalIndex++;
 	}
+	// std::cout << "TIME FINDDDD: " << time << std::endl;
 
 	// std::cout << std::endl;
 }
@@ -190,7 +201,11 @@ void	PmergeMe::sort(int recursionLevel)
 	// this->print("", this->vec);
 	this->sort(recursionLevel + 1);
 	// std::cout << std::endl;
+	// clock_t start_vec = clock();
 	this->insertMerge(elementsAmount, lastPairSize);
+	// clock_t end_vec = clock();
+	// double time_elapsed_vec = static_cast<double>(end_vec - start_vec) / CLOCKS_PER_SEC;
+	// std::cout << "MERGE ITE: "<< time_elapsed_vec << std::endl;
 }
 
 void	PmergeMe::increaseComparisons()
@@ -204,7 +219,7 @@ int	PmergeMe::sortVectorFordJohnson(std::vector<int> &vector)
 	this->vec = vector;
 	this->print("Main vec", this->vec);
 	this->sort(1);
-	this->print("Sorted main vec", this->vec);
+	// this->print("Sorted main vec", this->vec);
 	vector = this->vec;
 	return PmergeMe::comparisons_;
 }

@@ -25,7 +25,7 @@ CYAN = \033[0;36m
 NAME = PmergeMe
 
 C++ = c++
-FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic -g -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic -O2 #-g -fsanitize=address
 
 SRC = src/
 BIN_DIR = bin/
@@ -73,13 +73,13 @@ fclean: clean
 re: fclean all
 
 test:
-	@cd $(TESTER) && $(MAKE) && $(TESTER_BINARY)
+	@cd $(TESTER) && $(MAKE) --no-print-directory && $(TESTER_BINARY)
 
 testlog:
-	@cd $(TESTER) && $(MAKE) && $(TESTER_BINARY) > $(TEST_LOG_FILE)
+	@cd $(TESTER) && $(MAKE) --no-print-directory && $(TESTER_BINARY) > $(TEST_LOG_FILE)
 
 testfcl:
-	@cd $(TESTER) && $(MAKE) fclean
+	@cd $(TESTER) && $(MAKE) --no-print-directory fclean
 
 # ------------------ #
 
