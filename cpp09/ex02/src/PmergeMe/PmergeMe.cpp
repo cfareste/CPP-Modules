@@ -285,13 +285,3 @@ int	PmergeMe::sortDequeFordJohnson(std::deque<int> &deque)
 	deque = this->deq_;
 	return PmergeMe::comparisons_;
 }
-
-void	PmergeMe::print(const std::string &title, std::vector<int> &vector)
-{
-	std::cout << title << " (" << vector.size() << "): ";
-	for (std::vector<int>::iterator it = vector.begin(); it != vector.end(); ++it)
-	{
-		std::cout << *it << " ";
-	}
-	std::cout << std::endl;
-}

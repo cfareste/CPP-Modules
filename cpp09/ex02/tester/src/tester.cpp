@@ -25,6 +25,16 @@
 #define WHITE		GET_COLOR("\033[0;39m")
 #define BOLDWHITE	GET_COLOR("\033[1;39m")
 
+static void	printVector(const std::string &title, std::vector<int> &vector)
+{
+	std::cout << title;
+	for (std::vector<int>::iterator it = vector.begin(); it != vector.end(); ++it)
+	{
+		std::cout << *it << " ";
+	}
+	std::cout << std::endl;
+}
+
 static std::vector<int>	getVector(int size)
 {
 	std::vector<int>	vector;
@@ -86,8 +96,8 @@ static bool	checkResults(std::vector<int> &vector, std::vector<int> &initialVect
 
 	std::cout << RED << "-----" << std::endl;
 	std::cout << "Error:" << std::endl;
-	PmergeMe().print("Initial vector", initialVector);
-	PmergeMe().print("Sorted vector", vector);
+	printVector("Initial vector", initialVector);
+	printVector("Sorted vector", vector);
 	std::cout << "Is sorted: " << (isSorted(vector) ? "yes" : "no") << std::endl;
 	std::cout << "Comparisons (MAX = " << maxComparisons << "): " << comparisons << std::endl;
 	std::cout << "-----" << RESET << std::endl;

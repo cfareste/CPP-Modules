@@ -1,31 +1,41 @@
 #include "PmergeMe/PmergeMe.hpp"
-#include <iostream>
 #include <cmath>
+#include <iomanip>
+#include <cstdlib>
+#include <iostream>
 
-static bool	isSorted(std::vector<int>	&vector)
+static void	printVector(const std::string &title, std::vector<int> &vector)
 {
-	for (std::vector<int>::iterator it = vector.begin() + 1; it != vector.end(); ++it)
+	std::cout << title;
+	for (std::vector<int>::iterator it = vector.begin(); it != vector.end(); ++it)
 	{
-		if (*(it - 1) > *it)
-			return false;
+		std::cout << *it << " ";
 	}
-	return true;
+	std::cout << std::endl;
 }
 
-static std::vector<int>	getVector()
+static std::vector<int>	getVector(int argc, char **argv)
 {
-	// int	nums[1] = { 1 };
-	// int	nums[2] = { 3, 1 };
-	// int	nums[3] = { 3, 2, 1 };
-	// int	nums[4] = { 4, 1, 3, 2 };
-	// int	nums[6] = { 0, 4, 5, 2, 1, 6 };
-	int	nums[18] = { 15, 6, 7, 14, 10, 17, 13, 11, 18, 1, 9, 16, 8, 12, 3, 4, 5, 2 };
-	// int	nums[21] = { 11, 2, 17, 0, 16, 8, 6, 15, 10, 3, 1, 18, 9, 14, 19, 12, 5, 4, 20, 13, 7 };
-	// int	nums[22] = { 11, 2, 17, 0, 16, 8, 6, 15, 10, 3, 21, 1, 18, 9, 14, 19, 12, 5, 4, 20, 13, 7 };
-	// int	nums[23] = { 11, 2, 17, 0, 16, 8, 6, 15, 10, 3, 21, 1, 18, 9, 14, 22, 19, 12, 5, 4, 20, 13, 7 };
-	// int	nums[24] = { 11, 2, 17, 0, 16, 8, 23, 6, 15, 10, 3, 21, 1, 18, 9, 14, 22, 19, 12, 5, 4, 20, 13, 7 };
+	std::vector<int>	vector;
 
-	return std::vector<int>(nums, nums + (sizeof(nums) / sizeof(int)));
+	for (int i = 1; i < argc; i++)
+	{
+		vector.push_back(std::atoi(argv[i]));
+	}
+
+	return vector;
+}
+
+static std::deque<int>	getDeque(int argc, char **argv)
+{
+	std::deque<int>	deque;
+
+	for (int i = 1; i < argc; i++)
+	{
+		deque.push_back(std::atoi(argv[i]));
+	}
+
+	return deque;
 }
 
 static int	getMaxComparisons(int n)
@@ -38,18 +48,31 @@ static int	getMaxComparisons(int n)
 	return sum;
 }
 
-int	main()
+int	main(int argc, char **argv)
 {
 	try
 	{
-		PmergeMe	pmerge;
+		PmergeMe			pmerge;
+		std::deque<int>		deque = getDeque(argc, argv);
+		std::vector<int>	vector = getVector(argc, argv);
 
-		std::vector<int>	vector = getVector();
-		std::cout << "Max comparisons with this vector: " << getMaxComparisons(vector.size()) << std::endl;
-		std::cout << "Is sorted: " << (isSorted(vector) ? "yes" : "no") << std::endl;
+		printVector("Before: ", vector);
+
+		clock_t	init = clock();
 		int	comparisons = pmerge.sortVectorFordJohnson(vector);
-		std::cout << "Comparisons: " << comparisons << std::endl;
-		std::cout << "Is sorted: " << (isSorted(vector) ? "yes" : "no") << std::endl;
+		clock_t	end = clock();
+		double	vectorTime = ((end - init) / static_cast<double>(CLOCKS_PER_SEC)) * 1000000;
+
+		init = clock();
+		pmerge.sortDequeFordJohnson(deque);
+		end = clock();
+		double	dequeTime = ((end - init) / static_cast<double>(CLOCKS_PER_SEC)) * 1000000;
+
+		printVector("After:  ", vector);
+
+		std::cout << "Comparisons: " << comparisons << " (MAX = " << getMaxComparisons(vector.size()) << ")" << std::endl;
+		std::cout << "Time to process a range of " << std::setw(4) << vector.size() << " elements with std::vector : " << vectorTime << " us" << std::endl;
+		std::cout << "Time to process a range of " << std::setw(4) << vector.size() << " elements with std::deque : " << dequeTime << " us" << std::endl;
 	}
 	catch(const std::exception &e)
 	{

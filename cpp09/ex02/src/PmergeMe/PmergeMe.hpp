@@ -34,7 +34,4 @@ public:
 	static void	increaseComparisons();
 	int			sortVectorFordJohnson(std::vector<int> &vector);
 	int			sortDequeFordJohnson(std::deque<int> &deque);
-
-	void	print(const std::string &title, std::vector<int> &vector);
-
 };
