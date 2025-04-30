@@ -9,6 +9,8 @@ private:
 	static int			comparisons_;
 	std::vector<int>	vec;
 
+	int		initializePendIndexIterator(int jacobsthal, int totalInserted, int pendIndexesSize);
+
 	void	initializeBoundsVectors(std::vector<int> &bounds, int lastPairSize);
 	void	initializePairVectors(std::vector<int> &pend, int elementsAmount, int lastPairSize, int legalElements);
 	void	initializeIndexVectors(std::vector<int> &mainIdx, std::vector<int> &pendIdx, int mainSize, int pendSize);

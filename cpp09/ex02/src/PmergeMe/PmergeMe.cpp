@@ -81,6 +81,18 @@ void	PmergeMe::initializeIndexVectors(std::vector<int> &mainIdx, std::vector<int
 	}
 }
 
+int	PmergeMe::initializePendIndexIterator(int jacobsthal, int totalInserted, int pendIndexesSize)
+{
+	int	pendIndexIte = jacobsthal - totalInserted + 1;
+	if (pendIndexIte > pendIndexesSize)
+	{
+		pendIndexIte = pendIndexesSize;
+	}
+	pendIndexIte--;
+
+	return pendIndexIte;
+}
+
 void	PmergeMe::insertMergeVector(int elementsAmount, int lastPairSize)
 {
 	if (this->vec.size() / lastPairSize <= 2)
@@ -100,20 +112,14 @@ void	PmergeMe::insertMergeVector(int elementsAmount, int lastPairSize)
 	std::vector<int>	bounds;
 	this->initializeBoundsVectors(bounds, lastPairSize);
 
-	int	jacobsthal = 0, counter = 0, offset = 0, pendIndexIte = 0, inserted = 2, jacobsthalIndex = 2;
+	int	insertedElements = 0, offset = 0, pendIndexIte = 0, totalInserted = 2, jacobsthalIndex = 2;
 	std::vector<int>::iterator	boundMain, insertionIt, pendIt;
 	while (!pend.empty())
 	{
-		jacobsthal = getJacobsthal(jacobsthalIndex);
-		pendIndexIte = jacobsthal - inserted + 1;
-		if (pendIndexIte > static_cast<int>(pendIndexes.size()))
-		{
-			pendIndexIte = pendIndexes.size();
-		}
-		pendIndexIte--;
+		pendIndexIte = initializePendIndexIterator(getJacobsthal(jacobsthalIndex), totalInserted, pendIndexes.size());
 		pendIt = pend.begin() + (pendIndexIte * lastPairSize) + lastPairSize - 1;
 
-		counter = 0;
+		insertedElements = 0;
 		for (; pendIndexIte >= 0; --pendIndexIte)
 		{
 			boundMain = std::find(mainIndexes.begin(), mainIndexes.end(), pendIndexes.at(pendIndexIte) * -1);
@@ -123,11 +129,11 @@ void	PmergeMe::insertMergeVector(int elementsAmount, int lastPairSize)
 			this->vec.insert(this->vec.begin() + offset, pendIt - lastPairSize + 1, pendIt + 1);
 			mainIndexes.insert(mainIndexes.begin() + (offset / lastPairSize), pendIndexes.at(pendIndexIte));
 			pendIt -= lastPairSize;
-			counter++;
+			insertedElements++;
 		}
-		inserted += counter;
-		pend.erase(pend.begin(), pend.begin() + (lastPairSize * counter));
-		pendIndexes.erase(pendIndexes.begin(), pendIndexes.begin() + counter);
+		totalInserted += insertedElements;
+		pend.erase(pend.begin(), pend.begin() + (lastPairSize * insertedElements));
+		pendIndexes.erase(pendIndexes.begin(), pendIndexes.begin() + insertedElements);
 		jacobsthalIndex++;
 	}
 }
