@@ -2,6 +2,7 @@
 #include <cmath>
 #include <iomanip>
 #include <cstdlib>
+#include <sstream>
 #include <iostream>
 
 static void	printVector(const std::string &title, std::vector<int> &vector)
@@ -48,8 +49,38 @@ static int	getMaxComparisons(int n)
 	return sum;
 }
 
+static bool	isInt(char *str)
+{
+	int					num;
+	std::istringstream	stream(str);
+
+	stream >> std::noskipws >> num;
+	return stream.eof() && !stream.fail();
+}
+
+static bool	isNegative(char *argv)
+{
+	return argv[0] == '-';
+}
+
+static bool	areValidArgs(int argc, char **argv)
+{
+	for (int i = 1; i < argc; i++)
+	{
+		if (!isInt(argv[i]) || isNegative(argv[i]))
+			return false;
+	}
+	return true;
+}
+
 int	main(int argc, char **argv)
 {
+	if (argc < 2 || !areValidArgs(argc, argv))
+	{
+		std::cerr << "Error" << std::endl;
+		return EXIT_FAILURE;
+	}
+
 	try
 	{
 		PmergeMe			pmerge;
