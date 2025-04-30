@@ -100,28 +100,28 @@ void	PmergeMe::insertMergeVector(int elementsAmount, int lastPairSize)
 	std::vector<int>	bounds;
 	this->initializeBoundsVectors(bounds, lastPairSize);
 
-	int	jacobsthal = 0, counter = 0, offset = 0, inserted = 2, jacobsthalIndex = 2;
-	std::vector<int>::iterator			boundMain, insertionIt, pendIt;
-	std::vector<int>::reverse_iterator	pendIndexIt;
+	int	jacobsthal = 0, counter = 0, offset = 0, pendIndexIte = 0, inserted = 2, jacobsthalIndex = 2;
+	std::vector<int>::iterator	boundMain, insertionIt, pendIt;
 	while (!pend.empty())
 	{
 		jacobsthal = getJacobsthal(jacobsthalIndex);
-		pendIndexIt = std::find(pendIndexes.rbegin(), pendIndexes.rend(), jacobsthal * -1);
-		if (pendIndexIt == pendIndexes.rend())
+		pendIndexIte = jacobsthal - inserted + 1;
+		if (pendIndexIte > static_cast<int>(pendIndexes.size()))
 		{
-			pendIndexIt = pendIndexes.rbegin();
+			pendIndexIte = pendIndexes.size();
 		}
-		pendIt = pend.begin() + ((((*pendIndexIt) * -1) - inserted) * lastPairSize) + lastPairSize - 1;
+		pendIndexIte--;
+		pendIt = pend.begin() + (pendIndexIte * lastPairSize) + lastPairSize - 1;
 
 		counter = 0;
-		for (; pendIndexIt != pendIndexes.rend(); ++pendIndexIt)
+		for (; pendIndexIte >= 0; --pendIndexIte)
 		{
-			boundMain = std::find(mainIndexes.begin(), mainIndexes.end(), (*pendIndexIt) * -1);
+			boundMain = std::find(mainIndexes.begin(), mainIndexes.end(), pendIndexes.at(pendIndexIte) * -1);
 			insertionIt = std::upper_bound(bounds.begin(), bounds.begin() + (boundMain - mainIndexes.begin()), *pendIt, isSmaller);
 			offset = (insertionIt - bounds.begin()) * lastPairSize;
 			bounds.insert(insertionIt, *pendIt);
 			this->vec.insert(this->vec.begin() + offset, pendIt - lastPairSize + 1, pendIt + 1);
-			mainIndexes.insert(mainIndexes.begin() + (offset / lastPairSize), *pendIndexIt);
+			mainIndexes.insert(mainIndexes.begin() + (offset / lastPairSize), pendIndexes.at(pendIndexIte));
 			pendIt -= lastPairSize;
 			counter++;
 		}
