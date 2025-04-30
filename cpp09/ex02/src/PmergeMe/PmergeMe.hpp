@@ -9,6 +9,7 @@ private:
 	static int			comparisons_;
 	std::vector<int>	vec;
 
+	void	initializeBoundsVectors(std::vector<int> &bounds, int lastPairSize);
 	void	initializePairVectors(std::vector<int> &pend, int elementsAmount, int lastPairSize, int legalElements);
 	void	initializeIndexVectors(std::vector<int> &mainIdx, std::vector<int> &pendIdx, int mainSize, int pendSize);
 	void	insertMergeVector(int elementsAmount, int lastPairSize);

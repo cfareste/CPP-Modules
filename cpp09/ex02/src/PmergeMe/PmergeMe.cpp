@@ -50,6 +50,14 @@ static int	getJacobsthal(int index)
 	return res;
 }
 
+void	PmergeMe::initializeBoundsVectors(std::vector<int> &bounds, int lastPairSize)
+{
+	for (size_t i = lastPairSize - 1; i < this->vec.size(); i += lastPairSize)
+	{
+		bounds.push_back(this->vec.at(i));
+	}
+}
+
 void	PmergeMe::initializePairVectors(std::vector<int> &pend, int elementsAmount, int lastPairSize, int legalElements)
 {
 	for (int i = elementsAmount; i < legalElements; i += lastPairSize)
@@ -83,23 +91,17 @@ void	PmergeMe::insertMergeVector(int elementsAmount, int lastPairSize)
 	std::vector<int>	pendIndexes;
 
 	int	legalElements = (this->vec.size() / lastPairSize) * lastPairSize;
-	initializePairVectors(pend, elementsAmount, lastPairSize, legalElements);
+	this->initializePairVectors(pend, elementsAmount, lastPairSize, legalElements);
 
 	int	mainSize = legalElements / lastPairSize;
 	int	pendSize = static_cast<int>(pend.size()) / lastPairSize;
 	this->initializeIndexVectors(mainIndexes, pendIndexes, mainSize, pendSize);
 
-	std::vector<int>	pairBounds;
-	for (size_t i = lastPairSize - 1; i < this->vec.size(); i += lastPairSize)
-	{
-		pairBounds.push_back(this->vec.at(i));
-	}
+	std::vector<int>	bounds;
+	this->initializeBoundsVectors(bounds, lastPairSize);
 
-	int	inserted = 2;
-	int	jacobsthalIndex = 2;
-	std::vector<int>::iterator	boundMain;
-	std::vector<int>::iterator	insertionIt;
-	std::vector<int>::iterator	pendIt;
+	int	inserted = 2, jacobsthalIndex = 2;
+	std::vector<int>::iterator			boundMain, insertionIt, pendIt;
 	std::vector<int>::reverse_iterator	pendIndexIt;
 	while (!pend.empty())
 	{
@@ -109,17 +111,18 @@ void	PmergeMe::insertMergeVector(int elementsAmount, int lastPairSize)
 		{
 			pendIndexIt = pendIndexes.rbegin();
 		}
+		pendIt = pend.begin() + ((((*pendIndexIt) * -1) - inserted) * lastPairSize) + lastPairSize - 1;
 
 		int	counter = 0;
 		for (; pendIndexIt != pendIndexes.rend(); ++pendIndexIt)
 		{
-			pendIt = pend.begin() + ((((*pendIndexIt) * -1) - inserted) * lastPairSize) + lastPairSize - 1;
 			boundMain = std::find(mainIndexes.begin(), mainIndexes.end(), (*pendIndexIt) * -1);
-			insertionIt = std::upper_bound(pairBounds.begin(), pairBounds.begin() + (boundMain - mainIndexes.begin()), *pendIt, isSmaller);
-			int	offset = (insertionIt - pairBounds.begin()) * lastPairSize;
-			pairBounds.insert(insertionIt, *pendIt);
+			insertionIt = std::upper_bound(bounds.begin(), bounds.begin() + (boundMain - mainIndexes.begin()), *pendIt, isSmaller);
+			int	offset = (insertionIt - bounds.begin()) * lastPairSize;
+			bounds.insert(insertionIt, *pendIt);
 			this->vec.insert(this->vec.begin() + offset, pendIt - lastPairSize + 1, pendIt + 1);
 			mainIndexes.insert(mainIndexes.begin() + (offset / lastPairSize), *pendIndexIt);
+			pendIt -= lastPairSize;
 			counter++;
 		}
 		inserted += counter;
