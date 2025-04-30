@@ -50,7 +50,30 @@ static int	getJacobsthal(int index)
 	return res;
 }
 
-void	PmergeMe::insertMerge(int elementsAmount, int lastPairSize)
+void	PmergeMe::initializePairVectors(std::vector<int> &pend, int elementsAmount, int lastPairSize, int legalElements)
+{
+	for (int i = elementsAmount; i < legalElements; i += lastPairSize)
+	{
+		pend.insert(pend.end(), this->vec.begin() + i, this->vec.begin() + i + lastPairSize);
+		this->vec.erase(this->vec.begin() + i, this->vec.begin() + i + lastPairSize);
+		legalElements -= lastPairSize;
+	}
+}
+
+void	PmergeMe::initializeIndexVectors(std::vector<int> &mainIdx, std::vector<int> &pendIdx, int mainSize, int pendSize)
+{
+	mainIdx.push_back(-1);
+	for (int i = 1; i < mainSize; i++)
+	{
+		mainIdx.push_back(i);
+	}
+	for (int i = 0; i < pendSize; i++)
+	{
+		pendIdx.push_back((i + 2) * -1);
+	}
+}
+
+void	PmergeMe::insertMergeVector(int elementsAmount, int lastPairSize)
 {
 	if (this->vec.size() / lastPairSize <= 2)
 		return ;
@@ -60,24 +83,11 @@ void	PmergeMe::insertMerge(int elementsAmount, int lastPairSize)
 	std::vector<int>	pendIndexes;
 
 	int	legalElements = (this->vec.size() / lastPairSize) * lastPairSize;
+	initializePairVectors(pend, elementsAmount, lastPairSize, legalElements);
 
-	for (int i = elementsAmount; i < legalElements; i += lastPairSize)
-	{
-		pend.insert(pend.end(), this->vec.begin() + i, this->vec.begin() + i + lastPairSize);
-		this->vec.erase(this->vec.begin() + i, this->vec.begin() + i + lastPairSize);
-		legalElements -= lastPairSize;
-	}
-
-	mainIndexes.push_back(-1);
-	mainIndexes.push_back(1);
-	for (int i = 2; i < legalElements / lastPairSize; i++)
-	{
-		mainIndexes.push_back(i);
-	}
-	for (int i = 0; i < static_cast<int>(pend.size()) / lastPairSize; i++)
-	{
-		pendIndexes.push_back((i + 2) * -1);
-	}
+	int	mainSize = legalElements / lastPairSize;
+	int	pendSize = static_cast<int>(pend.size()) / lastPairSize;
+	this->initializeIndexVectors(mainIndexes, pendIndexes, mainSize, pendSize);
 
 	std::vector<int>	pairBounds;
 	for (size_t i = lastPairSize - 1; i < this->vec.size(); i += lastPairSize)
@@ -119,7 +129,7 @@ void	PmergeMe::insertMerge(int elementsAmount, int lastPairSize)
 	}
 }
 
-void	PmergeMe::sort(int recursionLevel)
+void	PmergeMe::sortVector(int recursionLevel)
 {
 	std::size_t	elementsAmount = 2 << (recursionLevel - 1);
 	if (this->vec.size() < elementsAmount)
@@ -139,8 +149,9 @@ void	PmergeMe::sort(int recursionLevel)
 			std::swap(firstNumber, secondNumber);
 		}
 	}
-	this->sort(recursionLevel + 1);
-	this->insertMerge(elementsAmount, lastPairSize);
+
+	this->sortVector(recursionLevel + 1);
+	this->insertMergeVector(elementsAmount, lastPairSize);
 }
 
 void	PmergeMe::increaseComparisons()
@@ -152,7 +163,7 @@ int	PmergeMe::sortVectorFordJohnson(std::vector<int> &vector)
 {
 	PmergeMe::comparisons_ = 0;
 	this->vec = vector;
-	this->sort(1);
+	this->sortVector(1);
 	vector = this->vec;
 	return PmergeMe::comparisons_;
 }
