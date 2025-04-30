@@ -117,7 +117,7 @@ void	PmergeMe::insertMerge(int elementsAmount, int lastPairSize)
 		pendIndexIt = std::find(pendIndexes.rbegin(), pendIndexes.rend(), jacobsthal * -1);
 		if (pendIndexIt == pendIndexes.rend())
 		{
-			pendIndexIt--;
+			pendIndexIt = pendIndexes.rbegin();
 		}
 
 		int	counter = 0;
