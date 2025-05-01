@@ -82,6 +82,7 @@ TestResult	&TestResult::operator+=(const TestResult &other)
 	this->dequeComparisons_ += other.dequeComparisons_;
 	this->vectorElapsedTime_ += other.vectorElapsedTime_;
 	this->dequeElapsedTime_ += other.dequeElapsedTime_;
+	return *this;
 }
 
 TestResult	&TestResult::operator/=(const double factor)
@@ -90,4 +91,5 @@ TestResult	&TestResult::operator/=(const double factor)
 	this->dequeComparisons_ /= factor;
 	this->vectorElapsedTime_ /= factor;
 	this->dequeElapsedTime_ /= factor;
+	return *this;
 }
