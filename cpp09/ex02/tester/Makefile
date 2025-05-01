@@ -33,14 +33,16 @@ BIN_DIR = bin/
 INC = -I$(SRC) -I$(PROGRAM_SRC)
 
 FILES = tester.cpp \
-		PmergeMe.cpp
+		PmergeMe.cpp \
+		TestResult.cpp
 OBJS = $(FILES:%.cpp=$(BIN_DIR)%.o)
 DEPS = $(OBJS:%.o=%.d)
 # ------------------ #
 
 # --- # vpath # ---- #
 vpath %.cpp $(SRC):\
-			$(PROGRAM_SRC)/PmergeMe
+			$(PROGRAM_SRC)/PmergeMe:\
+			$(SRC)/TestResult
 # ------------------ #
 
 

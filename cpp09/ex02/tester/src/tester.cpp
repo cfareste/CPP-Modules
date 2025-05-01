@@ -1,4 +1,5 @@
 #include "PmergeMe/PmergeMe.hpp"
+#include "TestResult/TestResult.hpp"
 #include <cmath>
 #include <cstdio>
 #include <sstream>
@@ -24,15 +25,6 @@
 #define CYAN		GET_COLOR("\033[0;36m")
 #define WHITE		GET_COLOR("\033[0;39m")
 #define BOLDWHITE	GET_COLOR("\033[1;39m")
-
-typedef struct s_Result
-{
-	bool	failed;
-	int		vectorComparisons;
-	int		dequeComparisons;
-	double	vectorElapsedTime;
-	double	dequeElapsedTime;
-}	t_Result;
 
 template<typename T>
 static void	printContainer(const std::string &title, T &container)
@@ -82,33 +74,33 @@ static int	getMaxComparisons(int n)
 	return sum;
 }
 
-static t_Result	executeSortingAlgorithm(std::vector<int> &vector, std::deque<int> &deque)
+static TestResult	executeSortingAlgorithm(std::vector<int> &vector, std::deque<int> &deque)
 {
 	PmergeMe			pmerge;
-	t_Result			result;
+	TestResult			result;
 	std::streambuf		*coutCopy = std::cout.rdbuf();
 	std::ostringstream	tempBuffer;
 
 	std::cout.rdbuf(tempBuffer.rdbuf());
 	clock_t	start = clock();
-	result.vectorComparisons = pmerge.sortVectorFordJohnson(vector);
+	result.setVectorComparisons(pmerge.sortVectorFordJohnson(vector));
 	clock_t	finish = clock();
-	result.vectorElapsedTime = (finish - start) / static_cast<double>(CLOCKS_PER_SEC);
+	result.setVectorElapsedTime((finish - start) / static_cast<double>(CLOCKS_PER_SEC));
 	start = clock();
-	result.dequeComparisons = pmerge.sortDequeFordJohnson(deque);
+	result.setDequeComparisons(pmerge.sortDequeFordJohnson(deque));
 	finish = clock();
-	result.dequeElapsedTime = (finish - start) / static_cast<double>(CLOCKS_PER_SEC);
+	result.setDequeElapsedTime((finish - start) / static_cast<double>(CLOCKS_PER_SEC));
 	std::cout.rdbuf(coutCopy);
 
 	return result;
 }
 
-static bool	checkResults(std::vector<int> &vector, std::deque<int> &deque, std::vector<int> &initialVector, t_Result &executionResult)
+static bool	checkResults(std::vector<int> &vector, std::deque<int> &deque, std::vector<int> &initialVector, TestResult &result)
 {
 	int	maxComparisons = getMaxComparisons(initialVector.size());
 
-	if (executionResult.vectorComparisons <= maxComparisons
-		&& executionResult.dequeComparisons == executionResult.vectorComparisons
+	if (result.getVectorComparisons() <= maxComparisons
+		&& result.getDequeComparisons() == result.getVectorComparisons()
 		&& isSorted(vector) && isSorted(deque)
 		&& initialVector.size() == vector.size()
 		&& initialVector.size() == deque.size())
@@ -121,13 +113,13 @@ static bool	checkResults(std::vector<int> &vector, std::deque<int> &deque, std::
 		<< " | Sorted vector / deque = " << vector.size() << " / " << deque.size() << std::endl;
 	std::cout << "Is vector sorted: " << (isSorted(vector) ? "yes" : "no") << std::endl;
 	std::cout << "Is deque sorted: " << (isSorted(deque) ? "yes" : "no") << std::endl;
-	std::cout << "Vector comparisons (MAX = " << maxComparisons << "): " << executionResult.vectorComparisons << std::endl;
-	std::cout << "Deque comparisons (MAX = " << maxComparisons << "): " << executionResult.dequeComparisons << std::endl;
+	std::cout << "Vector comparisons (MAX = " << maxComparisons << "): " << result.getVectorComparisons() << std::endl;
+	std::cout << "Deque comparisons (MAX = " << maxComparisons << "): " << result.getDequeComparisons() << std::endl;
 	std::cout << "-----" << RESET << std::endl;
 	return true;
 }
 
-static void printLogMessage(t_Result &rangeTestsResult, int rangeSize)
+static void printLogMessage(TestResult &rangeTestsResult, int rangeSize)
 {
 	int maxComparisons = getMaxComparisons(rangeSize);
 
@@ -136,30 +128,26 @@ static void printLogMessage(t_Result &rangeTestsResult, int rangeSize)
 
 	std::cout << CYAN << "Tested " << WHITE << rangeSize << CYAN << " random numbers "
 			<< WHITE << RANGE_TESTS_AMOUNT << CYAN << " times: "
-			<< (!rangeTestsResult.failed ? (std::string(GREEN) + "OK") : (std::string(RED_BOLD) + "KO")) << RESET
+			<< (!rangeTestsResult.hasFailed() ? (std::string(GREEN) + "OK") : (std::string(RED_BOLD) + "KO")) << RESET
 			<< " | " << YELLOW << "Avg. comparisons: " << RESET
-			<< static_cast<int>(rangeTestsResult.vectorComparisons)
+			<< static_cast<int>(rangeTestsResult.getVectorComparisons())
 			<< " / " << maxComparisons << " max"
-			<< " (" << YELLOW << rangeTestsResult.vectorComparisons / static_cast<double>(maxComparisons) * 100.0f << "%" << RESET << ")";
+			<< " (" << YELLOW << rangeTestsResult.getVectorComparisons() / static_cast<double>(maxComparisons) * 100.0f << "%" << RESET << ")";
 
 	std::cout.precision(5);
 	std::cout << " | " << PINK << "Avg. vector time: " << RESET
-			<< rangeTestsResult.vectorElapsedTime * 1000 << " ms"
+			<< rangeTestsResult.getVectorElapsedTime() * 1000 << " ms"
 			<< " | " << PINK << "Avg. deque time: " << RESET
-			<< rangeTestsResult.dequeElapsedTime * 1000 << " ms" << std::endl;
+			<< rangeTestsResult.getDequeElapsedTime() * 1000 << " ms" << std::endl;
 
 	std::cout.clear();
 }
 
 static void	executeRangeTests(int rangeSize)
 {
-	t_Result	executionResult;
-	t_Result	rangeTestsResult;
+	TestResult	executionResult;
+	TestResult	rangeTestsResult;
 
-	rangeTestsResult.failed = false;
-	rangeTestsResult.dequeElapsedTime = 0;
-	rangeTestsResult.vectorComparisons = 0;
-	rangeTestsResult.vectorElapsedTime = 0;
 	for (int j = 0; j < RANGE_TESTS_AMOUNT; j++)
 	{
 		std::vector<int>	vector = getVector(rangeSize);
@@ -167,15 +155,12 @@ static void	executeRangeTests(int rangeSize)
 		std::deque<int>		deque(vector.begin(), vector.end());
 
 		executionResult = executeSortingAlgorithm(vector, deque);
-		rangeTestsResult.dequeElapsedTime += executionResult.dequeElapsedTime;
-		rangeTestsResult.vectorElapsedTime += executionResult.vectorElapsedTime;
-		rangeTestsResult.vectorComparisons += executionResult.vectorComparisons;
-		rangeTestsResult.failed |= checkResults(vector, deque, initialVector, executionResult);
+		rangeTestsResult += executionResult;
+		int	testStatus = checkResults(vector, deque, initialVector, executionResult);
+		rangeTestsResult.addTestFailedStatus(testStatus);
 	}
 
-	rangeTestsResult.dequeElapsedTime /= static_cast<double>(RANGE_TESTS_AMOUNT);
-	rangeTestsResult.vectorElapsedTime /= static_cast<double>(RANGE_TESTS_AMOUNT);
-	rangeTestsResult.vectorComparisons /= static_cast<double>(RANGE_TESTS_AMOUNT);
+	rangeTestsResult /= static_cast<double>(RANGE_TESTS_AMOUNT);
 	printLogMessage(rangeTestsResult, rangeSize);
 }
 
