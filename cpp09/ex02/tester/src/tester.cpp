@@ -27,14 +27,16 @@
 
 typedef struct s_Result
 {
-	int		comparisons;
+	int		vectorComparisons;
+	int		dequeComparisons;
 	double	elapsedTime;
 }	t_Result;
 
-static void	printVector(const std::string &title, std::vector<int> &vector)
+template<typename T>
+static void	printContainer(const std::string &title, T &container)
 {
 	std::cout << title;
-	for (std::vector<int>::iterator it = vector.begin(); it != vector.end(); ++it)
+	for (typename T::iterator it = container.begin(); it != container.end(); ++it)
 	{
 		std::cout << *it << " ";
 	}
@@ -54,12 +56,13 @@ static std::vector<int>	getVector(int size)
 	return vector;
 }
 
-static bool	isSorted(std::vector<int> &vector)
+template <typename T>
+static bool	isSorted(T &container)
 {
-	if (vector.empty())
+	if (container.empty())
 		return true;
 
-	for (std::vector<int>::iterator it = vector.begin() + 1; it != vector.end(); ++it)
+	for (typename T::iterator it = container.begin() + 1; it != container.end(); ++it)
 	{
 		if (*(it - 1) > *it)
 			return false;
@@ -77,7 +80,7 @@ static int	getMaxComparisons(int n)
 	return sum;
 }
 
-static t_Result	executeSortingAlgorithm(std::vector<int> &vector)
+static t_Result	executeSortingAlgorithm(std::vector<int> &vector, std::deque<int> &deque)
 {
 	PmergeMe			pmerge;
 	t_Result			result;
@@ -86,27 +89,35 @@ static t_Result	executeSortingAlgorithm(std::vector<int> &vector)
 
 	std::cout.rdbuf(tempBuffer.rdbuf());
 	clock_t	start = clock();
-	result.comparisons = pmerge.sortVectorFordJohnson(vector);
+	result.vectorComparisons = pmerge.sortVectorFordJohnson(vector);
 	clock_t	finish = clock();
 	result.elapsedTime = (finish - start) / static_cast<double>(CLOCKS_PER_SEC);
+	result.dequeComparisons = pmerge.sortDequeFordJohnson(deque);
 	std::cout.rdbuf(coutCopy);
 
 	return result;
 }
 
-static bool	checkResults(std::vector<int> &vector, std::vector<int> &initialVector, int comparisons)
+static bool	checkResults(std::vector<int> &vector, std::deque<int> &deque, std::vector<int> &initialVector, t_Result &executionResult)
 {
 	int	maxComparisons = getMaxComparisons(initialVector.size());
 
-	if (comparisons <= maxComparisons && isSorted(vector) && initialVector.size() == vector.size())
+	if (executionResult.vectorComparisons <= maxComparisons
+		&& executionResult.dequeComparisons == executionResult.vectorComparisons
+		&& isSorted(vector) && isSorted(deque)
+		&& initialVector.size() == vector.size()
+		&& initialVector.size() == deque.size())
 		return false;
 
 	std::cout << RED << "-----" << std::endl;
 	std::cout << "Error:" << std::endl;
-	printVector("Initial vector", initialVector);
-	printVector("Sorted vector", vector);
-	std::cout << "Is sorted: " << (isSorted(vector) ? "yes" : "no") << std::endl;
-	std::cout << "Comparisons (MAX = " << maxComparisons << "): " << comparisons << std::endl;
+	printContainer("Initial sequence: ", initialVector);
+	std::cout << "Sequences sizes: Initial = " << initialVector.size()
+		<< " | Sorted vector / deque = " << vector.size() << " / " << deque.size() << std::endl;
+	std::cout << "Is vector sorted: " << (isSorted(vector) ? "yes" : "no") << std::endl;
+	std::cout << "Is deque sorted: " << (isSorted(deque) ? "yes" : "no") << std::endl;
+	std::cout << "Vector comparisons (MAX = " << maxComparisons << "): " << executionResult.vectorComparisons << std::endl;
+	std::cout << "Deque comparisons (MAX = " << maxComparisons << "): " << executionResult.dequeComparisons << std::endl;
 	std::cout << "-----" << RESET << std::endl;
 	return true;
 }
@@ -144,11 +155,12 @@ static void	executeRangeTests(int rangeSize)
 	{
 		std::vector<int>	vector = getVector(rangeSize);
 		std::vector<int>	initialVector = vector;
+		std::deque<int>		deque(vector.begin(), vector.end());
 
-		executionResult = executeSortingAlgorithm(vector);
+		executionResult = executeSortingAlgorithm(vector, deque);
 		averageTime += executionResult.elapsedTime;
-		averageComparisons += executionResult.comparisons;
-		result |= checkResults(vector, initialVector, executionResult.comparisons);
+		averageComparisons += executionResult.vectorComparisons;
+		result |= checkResults(vector, deque, initialVector, executionResult);
 	}
 
 	averageTime /= static_cast<double>(RANGE_TESTS_AMOUNT);
