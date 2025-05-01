@@ -27,18 +27,6 @@ static std::vector<int>	getVector(int argc, char **argv)
 	return vector;
 }
 
-static std::deque<int>	getDeque(int argc, char **argv)
-{
-	std::deque<int>	deque;
-
-	for (int i = 1; i < argc; i++)
-	{
-		deque.push_back(std::atoi(argv[i]));
-	}
-
-	return deque;
-}
-
 static int	getMaxComparisons(int n)
 {
 	int	sum = 0;
@@ -73,6 +61,12 @@ static bool	areValidArgs(int argc, char **argv)
 	return true;
 }
 
+static bool	hasDuplicates(std::vector<int> vector)
+{
+	std::sort(vector.begin(), vector.end());
+	return std::adjacent_find(vector.begin(), vector.end()) != vector.end();
+}
+
 int	main(int argc, char **argv)
 {
 	if (argc < 2 || !areValidArgs(argc, argv))
@@ -84,26 +78,29 @@ int	main(int argc, char **argv)
 	try
 	{
 		PmergeMe			pmerge;
-		std::deque<int>		deque = getDeque(argc, argv);
 		std::vector<int>	vector = getVector(argc, argv);
+		std::deque<int>		deque(vector.begin(), vector.end());
+
+		if (hasDuplicates(vector))
+			throw std::invalid_argument("Sequence contains duplicates");
 
 		printVector("Before: ", vector);
 
 		clock_t	init = clock();
 		int	comparisons = pmerge.sortVectorFordJohnson(vector);
 		clock_t	end = clock();
-		double	vectorTime = ((end - init) / static_cast<double>(CLOCKS_PER_SEC)) * 1000000;
+		double	vectorTime = ((end - init) / static_cast<double>(CLOCKS_PER_SEC)) * 1000;
 
 		init = clock();
 		pmerge.sortDequeFordJohnson(deque);
 		end = clock();
-		double	dequeTime = ((end - init) / static_cast<double>(CLOCKS_PER_SEC)) * 1000000;
+		double	dequeTime = ((end - init) / static_cast<double>(CLOCKS_PER_SEC)) * 1000;
 
 		printVector("After:  ", vector);
 
 		std::cout << "Comparisons: " << comparisons << " (MAX = " << getMaxComparisons(vector.size()) << ")" << std::endl;
-		std::cout << "Time to process a range of " << std::setw(4) << vector.size() << " elements with std::vector : " << vectorTime << " us" << std::endl;
-		std::cout << "Time to process a range of " << std::setw(4) << vector.size() << " elements with std::deque : " << dequeTime << " us" << std::endl;
+		std::cout << "Time to process a range of " << std::setw(4) << vector.size() << " elements with std::vector : " << vectorTime << " ms" << std::endl;
+		std::cout << "Time to process a range of " << std::setw(4) << vector.size() << " elements with std::deque : " << dequeTime << " ms" << std::endl;
 	}
 	catch(const std::exception &e)
 	{
