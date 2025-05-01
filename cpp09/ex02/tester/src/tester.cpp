@@ -27,9 +27,11 @@
 
 typedef struct s_Result
 {
+	bool	failed;
 	int		vectorComparisons;
 	int		dequeComparisons;
-	double	elapsedTime;
+	double	vectorElapsedTime;
+	double	dequeElapsedTime;
 }	t_Result;
 
 template<typename T>
@@ -91,8 +93,11 @@ static t_Result	executeSortingAlgorithm(std::vector<int> &vector, std::deque<int
 	clock_t	start = clock();
 	result.vectorComparisons = pmerge.sortVectorFordJohnson(vector);
 	clock_t	finish = clock();
-	result.elapsedTime = (finish - start) / static_cast<double>(CLOCKS_PER_SEC);
+	result.vectorElapsedTime = (finish - start) / static_cast<double>(CLOCKS_PER_SEC);
+	start = clock();
 	result.dequeComparisons = pmerge.sortDequeFordJohnson(deque);
+	finish = clock();
+	result.dequeElapsedTime = (finish - start) / static_cast<double>(CLOCKS_PER_SEC);
 	std::cout.rdbuf(coutCopy);
 
 	return result;
@@ -122,7 +127,7 @@ static bool	checkResults(std::vector<int> &vector, std::deque<int> &deque, std::
 	return true;
 }
 
-static void printLogMessage(bool result, int rangeSize, double averageComparisons, double averageTime)
+static void printLogMessage(t_Result &rangeTestsResult, int rangeSize)
 {
 	int maxComparisons = getMaxComparisons(rangeSize);
 
@@ -131,26 +136,30 @@ static void printLogMessage(bool result, int rangeSize, double averageComparison
 
 	std::cout << CYAN << "Tested " << WHITE << rangeSize << CYAN << " random numbers "
 			<< WHITE << RANGE_TESTS_AMOUNT << CYAN << " times: "
-			<< (!result ? (std::string(GREEN) + "OK") : (std::string(RED_BOLD) + "KO")) << RESET
+			<< (!rangeTestsResult.failed ? (std::string(GREEN) + "OK") : (std::string(RED_BOLD) + "KO")) << RESET
 			<< " | " << YELLOW << "Avg. comparisons: " << RESET
-			<< static_cast<int>(averageComparisons)
+			<< static_cast<int>(rangeTestsResult.vectorComparisons)
 			<< " / " << maxComparisons << " max"
-			<< " (" << YELLOW << averageComparisons / static_cast<double>(maxComparisons) * 100.0f << "%" << RESET << ")";
+			<< " (" << YELLOW << rangeTestsResult.vectorComparisons / static_cast<double>(maxComparisons) * 100.0f << "%" << RESET << ")";
 
 	std::cout.precision(5);
-	std::cout << " | " << PINK << "Avg. time: " << RESET
-			<< averageTime * 1000 << " ms" << std::endl;
+	std::cout << " | " << PINK << "Avg. vector time: " << RESET
+			<< rangeTestsResult.vectorElapsedTime * 1000 << " ms"
+			<< " | " << PINK << "Avg. deque time: " << RESET
+			<< rangeTestsResult.dequeElapsedTime * 1000 << " ms" << std::endl;
 
 	std::cout.clear();
 }
 
 static void	executeRangeTests(int rangeSize)
 {
-	int			result = 0;
-	double		averageTime = 0;
-	double		averageComparisons = 0;
 	t_Result	executionResult;
+	t_Result	rangeTestsResult;
 
+	rangeTestsResult.failed = false;
+	rangeTestsResult.dequeElapsedTime = 0;
+	rangeTestsResult.vectorComparisons = 0;
+	rangeTestsResult.vectorElapsedTime = 0;
 	for (int j = 0; j < RANGE_TESTS_AMOUNT; j++)
 	{
 		std::vector<int>	vector = getVector(rangeSize);
@@ -158,14 +167,16 @@ static void	executeRangeTests(int rangeSize)
 		std::deque<int>		deque(vector.begin(), vector.end());
 
 		executionResult = executeSortingAlgorithm(vector, deque);
-		averageTime += executionResult.elapsedTime;
-		averageComparisons += executionResult.vectorComparisons;
-		result |= checkResults(vector, deque, initialVector, executionResult);
+		rangeTestsResult.dequeElapsedTime += executionResult.dequeElapsedTime;
+		rangeTestsResult.vectorElapsedTime += executionResult.vectorElapsedTime;
+		rangeTestsResult.vectorComparisons += executionResult.vectorComparisons;
+		rangeTestsResult.failed |= checkResults(vector, deque, initialVector, executionResult);
 	}
 
-	averageTime /= static_cast<double>(RANGE_TESTS_AMOUNT);
-	averageComparisons /= static_cast<double>(RANGE_TESTS_AMOUNT);
-	printLogMessage(result, rangeSize, averageComparisons, averageTime);
+	rangeTestsResult.dequeElapsedTime /= static_cast<double>(RANGE_TESTS_AMOUNT);
+	rangeTestsResult.vectorElapsedTime /= static_cast<double>(RANGE_TESTS_AMOUNT);
+	rangeTestsResult.vectorComparisons /= static_cast<double>(RANGE_TESTS_AMOUNT);
+	printLogMessage(rangeTestsResult, rangeSize);
 }
 
 int	main()
