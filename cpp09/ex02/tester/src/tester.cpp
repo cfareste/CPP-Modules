@@ -10,8 +10,8 @@
 # define MAX_SIZE 3000
 #endif
 
-#ifndef RANGE_TESTS_AMOUNT
-# define RANGE_TESTS_AMOUNT 1000
+#ifndef SEQUENCE_TESTS_AMOUNT
+# define SEQUENCE_TESTS_AMOUNT 1000
 #endif
 
 #define GET_COLOR(color) (isatty(fileno(stdout)) ? color : "")
@@ -119,49 +119,49 @@ static bool	checkResults(std::vector<int> &vector, std::deque<int> &deque, std::
 	return true;
 }
 
-static void printLogMessage(TestResult &rangeTestsResult, int rangeSize)
+static void printLogMessage(TestResult &sequenceTestsResult, int sequenceSize)
 {
-	int maxComparisons = getMaxComparisons(rangeSize);
+	int maxComparisons = getMaxComparisons(sequenceSize);
 
 	std::cout.precision(2);
 	std::cout.setf(std::ios::fixed);
 
-	std::cout << CYAN << "Tested " << WHITE << rangeSize << CYAN << " random numbers "
-			<< WHITE << RANGE_TESTS_AMOUNT << CYAN << " times: "
-			<< (!rangeTestsResult.hasFailed() ? (std::string(GREEN) + "OK") : (std::string(RED_BOLD) + "KO")) << RESET
+	std::cout << CYAN << "Tested " << WHITE << sequenceSize << CYAN << " random numbers "
+			<< WHITE << SEQUENCE_TESTS_AMOUNT << CYAN << " times: "
+			<< (!sequenceTestsResult.hasFailed() ? (std::string(GREEN) + "OK") : (std::string(RED_BOLD) + "KO")) << RESET
 			<< " | " << YELLOW << "Avg. comparisons: " << RESET
-			<< static_cast<int>(rangeTestsResult.getVectorComparisons())
+			<< static_cast<int>(sequenceTestsResult.getVectorComparisons())
 			<< " / " << maxComparisons << " max"
-			<< " (" << YELLOW << rangeTestsResult.getVectorComparisons() / static_cast<double>(maxComparisons) * 100.0f << "%" << RESET << ")";
+			<< " (" << YELLOW << sequenceTestsResult.getVectorComparisons() / static_cast<double>(maxComparisons) * 100.0f << "%" << RESET << ")";
 
 	std::cout.precision(5);
 	std::cout << " | " << PINK << "Avg. vector time: " << RESET
-			<< rangeTestsResult.getVectorElapsedTime() * 1000 << " ms"
+			<< sequenceTestsResult.getVectorElapsedTime() * 1000 << " ms"
 			<< " | " << PINK << "Avg. deque time: " << RESET
-			<< rangeTestsResult.getDequeElapsedTime() * 1000 << " ms" << std::endl;
+			<< sequenceTestsResult.getDequeElapsedTime() * 1000 << " ms" << std::endl;
 
 	std::cout.clear();
 }
 
-static void	executeRangeTests(int rangeSize)
+static void	executeSequenceTests(int sequenceSize)
 {
 	TestResult	executionResult;
-	TestResult	rangeTestsResult;
+	TestResult	sequenceTestsResult;
 
-	for (int j = 0; j < RANGE_TESTS_AMOUNT; j++)
+	for (int j = 0; j < SEQUENCE_TESTS_AMOUNT; j++)
 	{
-		std::vector<int>	vector = getVector(rangeSize);
+		std::vector<int>	vector = getVector(sequenceSize);
 		std::vector<int>	initialVector = vector;
 		std::deque<int>		deque(vector.begin(), vector.end());
 
 		executionResult = executeSortingAlgorithm(vector, deque);
-		rangeTestsResult += executionResult;
+		sequenceTestsResult += executionResult;
 		int	testStatus = checkResults(vector, deque, initialVector, executionResult);
-		rangeTestsResult.addTestFailedStatus(testStatus);
+		sequenceTestsResult.addTestFailedStatus(testStatus);
 	}
 
-	rangeTestsResult /= static_cast<double>(RANGE_TESTS_AMOUNT);
-	printLogMessage(rangeTestsResult, rangeSize);
+	sequenceTestsResult /= static_cast<double>(SEQUENCE_TESTS_AMOUNT);
+	printLogMessage(sequenceTestsResult, sequenceSize);
 }
 
 int	main()
@@ -171,7 +171,7 @@ int	main()
 	try
 	{
 		for (int i = 1; i <= MAX_SIZE; i++)
-			executeRangeTests(i);
+			executeSequenceTests(i);
 
 		return EXIT_SUCCESS;
 	}
