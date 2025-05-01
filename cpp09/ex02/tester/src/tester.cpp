@@ -25,6 +25,12 @@
 #define WHITE		GET_COLOR("\033[0;39m")
 #define BOLDWHITE	GET_COLOR("\033[1;39m")
 
+typedef struct s_Result
+{
+	int		comparisons;
+	double	elapsedTime;
+}	t_Result;
+
 static void	printVector(const std::string &title, std::vector<int> &vector)
 {
 	std::cout << title;
@@ -71,20 +77,21 @@ static int	getMaxComparisons(int n)
 	return sum;
 }
 
-static int	executeSortingAlgorithm(std::vector<int> &vector, double &elapsedTime)
+static t_Result	executeSortingAlgorithm(std::vector<int> &vector)
 {
 	PmergeMe			pmerge;
+	t_Result			result;
 	std::streambuf		*coutCopy = std::cout.rdbuf();
 	std::ostringstream	tempBuffer;
 
 	std::cout.rdbuf(tempBuffer.rdbuf());
 	clock_t	start = clock();
-	int	comparisons = pmerge.sortVectorFordJohnson(vector);
+	result.comparisons = pmerge.sortVectorFordJohnson(vector);
 	clock_t	finish = clock();
-	elapsedTime = (finish - start) / static_cast<double>(CLOCKS_PER_SEC);
+	result.elapsedTime = (finish - start) / static_cast<double>(CLOCKS_PER_SEC);
 	std::cout.rdbuf(coutCopy);
 
-	return comparisons;
+	return result;
 }
 
 static bool	checkResults(std::vector<int> &vector, std::vector<int> &initialVector, int comparisons)
@@ -128,20 +135,20 @@ static void printLogMessage(bool result, int rangeSize, double averageComparison
 
 static void	executeRangeTests(int rangeSize)
 {
-	int		result = 0;
-	double	averageTime = 0;
-	double	averageComparisons = 0;
+	int			result = 0;
+	double		averageTime = 0;
+	double		averageComparisons = 0;
+	t_Result	executionResult;
 
 	for (int j = 0; j < RANGE_TESTS_AMOUNT; j++)
 	{
 		std::vector<int>	vector = getVector(rangeSize);
 		std::vector<int>	initialVector = vector;
 
-		double	time = 0;
-		int		comparisons = executeSortingAlgorithm(vector, time);
-		averageTime += time;
-		averageComparisons += comparisons;
-		result |= checkResults(vector, initialVector, comparisons);
+		executionResult = executeSortingAlgorithm(vector);
+		averageTime += executionResult.elapsedTime;
+		averageComparisons += executionResult.comparisons;
+		result |= checkResults(vector, initialVector, executionResult.comparisons);
 	}
 
 	averageTime /= static_cast<double>(RANGE_TESTS_AMOUNT);
