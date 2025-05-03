@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <sstream>
 #include <iostream>
+#include <algorithm>
 
 static void	printVector(const std::string &title, std::vector<int> &vector)
 {
