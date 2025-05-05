@@ -24,7 +24,7 @@ Array<T>::Array(const Array &array) : _elements(new T[array._size]()), _size(arr
 }
 
 template<typename T>
-std::size_t Array<T>::size() const
+std::size_t	Array<T>::size() const
 {
 	return this->_size;
 }
@@ -58,6 +58,5 @@ T	&Array<T>::operator[](std::size_t index) const
 template<typename T>
 Array<T>::~Array()
 {
-	if (this->_elements != NULL)
-		delete[] this->_elements;
+	delete[] this->_elements;
 }

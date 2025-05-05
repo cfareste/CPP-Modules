@@ -6,7 +6,7 @@ template <typename T>
 class Array
 {
 private:
-	T		*_elements;
+	T			*_elements;
 	std::size_t	_size;
 
 public:

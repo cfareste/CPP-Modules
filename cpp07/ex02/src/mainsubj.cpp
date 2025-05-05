@@ -1,4 +1,5 @@
 #include "Array/Array.hpp"
+#include <cstdlib>
 #include <iostream>
 
 #define MAX_VAL 750
