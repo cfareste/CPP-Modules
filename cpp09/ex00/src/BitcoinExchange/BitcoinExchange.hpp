@@ -2,6 +2,7 @@
 
 #include <map>
 #include <string>
+#include <cstddef>
 #include <fstream>
 
 #define DATABASE_HEADER "date,exchange_rate"
@@ -17,7 +18,9 @@ private:
 	BitcoinExchange();
 
 	static bool	openFileForRead(const std::string &path, std::ifstream &fileStream);
+	static bool	isInt(const std::string &str);
 	static bool	isFloat(const std::string &str);
+	static bool	areValidDateSeparators(const std::size_t &firstDash, const std::size_t &lastDash);
 	static bool	areValidDateValues(const std::string &year, const std::string &month, const std::string &day);
 	static void	checkDate(const std::string &date);
 	static void	checkValue(const std::string &value, float maxValue);

@@ -41,6 +41,15 @@ bool	BitcoinExchange::openFileForRead(const std::string &path, std::ifstream &fi
 	return fileStream.is_open();
 }
 
+bool	BitcoinExchange::isInt(const std::string &str)
+{
+	int					num;
+	std::istringstream	stream(str);
+
+	stream >> std::noskipws >> num;
+	return stream.eof() && !stream.fail();
+}
+
 bool	BitcoinExchange::isFloat(const std::string &str)
 {
 	float				num;
@@ -50,13 +59,21 @@ bool	BitcoinExchange::isFloat(const std::string &str)
 	return stream.eof() && !stream.fail();
 }
 
+bool	BitcoinExchange::areValidDateSeparators(const std::size_t &firstDash, const std::size_t &lastDash)
+{
+	return (firstDash != std::string::npos
+			&& lastDash != std::string::npos
+			&& firstDash != lastDash);
+}
+
 bool	BitcoinExchange::areValidDateValues(const std::string &year, const std::string &month, const std::string &day)
 {
 	long	yearValue = std::atol(year.c_str());
 	long	monthValue = std::atol(month.c_str());
 	long	dayValue = std::atol(day.c_str());
 
-	return (yearValue >= 0 && yearValue <= 9999
+	return (isInt(year) && isInt(month) && isInt(day)
+			&& yearValue >= 0 && yearValue <= 9999
 			&& monthValue >= 1 && monthValue <= 12
 			&& dayValue >= 1 && dayValue <= 31
 			&& !(monthValue == 2 && dayValue > 29));
@@ -70,12 +87,8 @@ void	BitcoinExchange::checkDate(const std::string &date)
 	std::string	month = date.substr(firstDash + 1, lastDash - firstDash - 1);
 	std::string	day = date.substr(lastDash + 1);
 
-	for (std::size_t i = 0; i < date.length(); i++)
-	{
-		if (date[i] != '-' && !std::isdigit(date[i]))
-			throw std::invalid_argument("bad input => '" + date + "'");
-	}
-	if (!BitcoinExchange::areValidDateValues(year, month, day)
+	if (!areValidDateSeparators(firstDash, lastDash)
+		|| !areValidDateValues(year, month, day)
 		|| year.length() != 4 || month.length() != 2 || day.length() != 2
 		|| date.length() != 10)
 		throw std::invalid_argument("bad input => '" + date + "'");
