@@ -63,7 +63,7 @@ void	BitcoinExchange::checkDate(const std::string &date)
 
 	for (std::size_t i = 0; i < date.length(); i++)
 	{
-		if (date[i] == '-' && !std::isdigit(date[i]))
+		if (date[i] != '-' && !std::isdigit(date[i]))
 			throw std::invalid_argument("bad input => '" + date + "'");
 	}
 	if (year < 0 || year > 9999
