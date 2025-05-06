@@ -52,9 +52,11 @@ bool	BitcoinExchange::isFloat(const std::string &str)
 
 void	BitcoinExchange::checkDate(const std::string &date)
 {
-	long	year = std::atol(date.substr(0, date.find('-')).c_str());
-	long	month = std::atol(date.substr(date.find('-') + 1, date.rfind('-') - date.find('-') - 1).c_str());
-	long	day = std::atol(date.substr(date.rfind('-') + 1).c_str());
+	std::size_t	firstDash = date.find('-');
+	std::size_t	lastDash = date.rfind('-');
+	long		year = std::atol(date.substr(0, firstDash).c_str());
+	long		month = std::atol(date.substr(firstDash + 1, lastDash - firstDash - 1).c_str());
+	long		day = std::atol(date.substr(lastDash + 1).c_str());
 
 	int	numOfSigns = 0;
 	for (std::size_t i = 0; i < date.length(); i++)
@@ -69,7 +71,7 @@ void	BitcoinExchange::checkDate(const std::string &date)
 		|| day < 1 || day > 31
 		|| (month == 2 && day > 29)
 		|| numOfSigns != 2
-		|| date.substr(date.find('-') + 1).length() != 5)
+		|| date.substr(firstDash + 1).length() != 5)
 		throw std::invalid_argument("bad input => '" + date + "'");
 }
 
