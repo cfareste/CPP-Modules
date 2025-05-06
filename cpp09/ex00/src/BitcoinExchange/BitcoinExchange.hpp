@@ -18,6 +18,7 @@ private:
 
 	static bool	openFileForRead(const std::string &path, std::ifstream &fileStream);
 	static bool	isFloat(const std::string &str);
+	static bool	areValidDateValues(const std::string &year, const std::string &month, const std::string &day);
 	static void	checkDate(const std::string &date);
 	static void	checkValue(const std::string &value, float maxValue);
 	static void	checkFormat(const std::string &key, const std::string &value, float maxValue);
