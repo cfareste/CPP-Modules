@@ -54,24 +54,24 @@ void	BitcoinExchange::checkDate(const std::string &date)
 {
 	std::size_t	firstDash = date.find('-');
 	std::size_t	lastDash = date.rfind('-');
-	long		year = std::atol(date.substr(0, firstDash).c_str());
-	long		month = std::atol(date.substr(firstDash + 1, lastDash - firstDash - 1).c_str());
-	long		day = std::atol(date.substr(lastDash + 1).c_str());
+	std::string	yearStr = date.substr(0, firstDash);
+	std::string	monthStr = date.substr(firstDash + 1, lastDash - firstDash - 1);
+	std::string	dayStr = date.substr(lastDash + 1);
+	long		year = std::atol(yearStr.c_str());
+	long		month = std::atol(monthStr.c_str());
+	long		day = std::atol(dayStr.c_str());
 
-	int	numOfSigns = 0;
 	for (std::size_t i = 0; i < date.length(); i++)
 	{
-		if (date[i] == '-')
-			numOfSigns++;
-		else if (!std::isdigit(date[i]))
+		if (date[i] == '-' && !std::isdigit(date[i]))
 			throw std::invalid_argument("bad input => '" + date + "'");
 	}
-	if (year < 0 || year > std::numeric_limits<int>::max()
+	if (year < 0 || year > 9999
 		|| month < 1 || month > 12
 		|| day < 1 || day > 31
 		|| (month == 2 && day > 29)
-		|| numOfSigns != 2
-		|| date.substr(firstDash + 1).length() != 5)
+		|| yearStr.length() != 4 || monthStr.length() != 2 || dayStr.length() != 2
+		|| date.length() != 10)
 		throw std::invalid_argument("bad input => '" + date + "'");
 }
 
