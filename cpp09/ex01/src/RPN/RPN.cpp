@@ -37,11 +37,12 @@ bool	RPN::isOperand(const std::string &token)
 	return std::find(operands, operandsEnd, token) != operandsEnd;
 }
 
-int	RPN::operate(int lval, int rval, const std::string &token)
+float	RPN::operate(float lval, float rval, const std::string &token)
 {
 	if (token == "+") return lval + rval;
 	if (token == "-") return lval - rval;
 	if (token == "*") return lval * rval;
+	if (token == "/" && rval == 0) throw std::invalid_argument("Cannot divide by 0");
 	if (token == "/") return lval / rval;
 	return 0;
 }
@@ -52,7 +53,7 @@ void	RPN::handleOperand(const std::string &operand)
 		throw std::invalid_argument("Insufficient numbers to compute '"
 			+ operand + "' operation (Numbers amount = Operands amount - 1)");
 
-	int	lval = 0, rval = 0;
+	float	lval = 0, rval = 0;
 	rval = this->operationsBuffer_.top();
 	this->operationsBuffer_.pop();
 	lval = this->operationsBuffer_.top();

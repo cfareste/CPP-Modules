@@ -9,11 +9,11 @@ class RPN
 {
 private:
 	const static std::string	operands[OPERANDS_AMOUNT];
-	std::stack<int>				operationsBuffer_;
+	std::stack<float>			operationsBuffer_;
 
 	bool		isNumber(const std::string &token);
 	bool		isOperand(const std::string &token);
-	int			operate(int lval, int rval, const std::string &token);
+	float		operate(float lval, float rval, const std::string &token);
 	void		handleOperand(const std::string &operand);
 	std::string	getToken(const std::string &expression, std::size_t &startPos);
 
